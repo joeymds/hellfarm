@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://b2cu65nfos6gc"]
+[gd_scene load_steps=2 format=3 uid="uid://b2cu65nfos6gc"]
+
+[ext_resource type="Script" path="res://Code/UI/ExperienceBar.cs" id="1_4wboo"]
 
 [node name="ExperienceBar" type="CanvasLayer"]
+script = ExtResource("1_4wboo")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15
@@ -10,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="ProgressBar" type="ProgressBar" parent="MarginContainer"]
+[node name="ExperienceBar" type="ProgressBar" parent="MarginContainer"]
 custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 size_flags_vertical = 8

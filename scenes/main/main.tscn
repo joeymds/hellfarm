@@ -14,7 +14,8 @@
 [node name="ArenaTimeUI" parent="." node_paths=PackedStringArray("ArenaTimeManager") instance=ExtResource("5_qs8h7")]
 ArenaTimeManager = NodePath("../ArenaTimeManager")
 
-[node name="ExperienceBar" parent="." instance=ExtResource("8_c2hmi")]
+[node name="ExperienceBar" parent="." node_paths=PackedStringArray("ExperienceMan") instance=ExtResource("8_c2hmi")]
+ExperienceMan = NodePath("../ExperienceManager")
 
 [node name="ArenaTimeManager" parent="." instance=ExtResource("2_dpjdg")]
 

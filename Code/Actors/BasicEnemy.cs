@@ -28,7 +28,6 @@ public partial class BasicEnemy : CharacterBody2D
 		{
 			return (playerNode.GlobalPosition - GlobalPosition).Normalized();
 		}
-
 		return Vector2.Zero;
 	}
 }

@@ -34,7 +34,9 @@ public partial class ExperienceManager : Node
 		
 		EmitSignal("ExperienceUpdated", CurrentExperience, TargetExperience);
 
-		if (CurrentExperience == TargetExperience)
+		GD.Print($"{CurrentExperience}/{TargetExperience}");
+		
+		if (CurrentExperience >= TargetExperience)
 		{
 			CurrentLevel += 1;
 			TargetExperience += TargetExperienceGrowth;
