@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://fsqoht7y305v"]
+
+[ext_resource type="Script" path="res://Code/Managers/ArenaTimeManager.cs" id="1_0gaem"]
+
+[node name="ArenaTimeManager" type="Node"]
+script = ExtResource("1_0gaem")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 60.0
+one_shot = true
+autostart = true
