@@ -1,14 +1,65 @@
-[gd_scene load_steps=6 format=3 uid="uid://bookbafjqraub"]
+[gd_scene load_steps=14 format=3 uid="uid://bookbafjqraub"]
 
 [ext_resource type="Texture2D" uid="uid://ddvhwogm2xkej" path="res://scenes/game_objects/player/player.png" id="1_74ndk"]
 [ext_resource type="Script" path="res://Code/Actors/Player.cs" id="1_ehvaq"]
 [ext_resource type="PackedScene" uid="uid://br0euctaigbn7" path="res://scenes/ability/sword_ability_controller/sword_ability_controller.tscn" id="2_hn228"]
+[ext_resource type="Texture2D" uid="uid://0rh7bubwkwtt" path="res://scenes/game_objects/player/player-01.png" id="4_6jhcu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_v04q6"]
 radius = 18.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_734t4"]
 radius = 5.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ju8f"]
+atlas = ExtResource("4_6jhcu")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iag8u"]
+atlas = ExtResource("4_6jhcu")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hpe78"]
+atlas = ExtResource("4_6jhcu")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0g0we"]
+atlas = ExtResource("4_6jhcu")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ev7ci"]
+atlas = ExtResource("4_6jhcu")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m2616"]
+atlas = ExtResource("4_6jhcu")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8mir8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ju8f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iag8u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hpe78")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0g0we")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ev7ci")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m2616")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 15.0
+}]
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 0
@@ -21,7 +72,7 @@ script = ExtResource("1_ehvaq")
 MaxRange = 60.0
 
 [node name="Detector" type="Area2D" parent="."]
-position = Vector2(0, -5)
+position = Vector2(0, -8)
 collision_layer = 16
 collision_mask = 0
 
@@ -30,10 +81,18 @@ position = Vector2(0, -2)
 shape = SubResource("CircleShape2D_v04q6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(0, -10)
 texture = ExtResource("1_74ndk")
 offset = Vector2(0, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -5)
+position = Vector2(0, -8)
 shape = SubResource("CircleShape2D_734t4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -12)
+sprite_frames = SubResource("SpriteFrames_8mir8")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.00484979

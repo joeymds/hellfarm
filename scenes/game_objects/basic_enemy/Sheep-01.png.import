@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvv8onlkwv0k8"
-path="res://.godot/imported/sheep=sheet-01.png-1f7e270d3f75f1415d8d63a5e4d8f04d.ctex"
+uid="uid://n7n5qfsngbnv"
+path="res://.godot/imported/Sheep-01.png-caccb0ca57e1f12c3919716e27bbff29.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/game_objects/basic_enemy/sheep=sheet-01.png"
-dest_files=["res://.godot/imported/sheep=sheet-01.png-1f7e270d3f75f1415d8d63a5e4d8f04d.ctex"]
+source_file="res://scenes/game_objects/basic_enemy/Sheep-01.png"
+dest_files=["res://.godot/imported/Sheep-01.png-caccb0ca57e1f12c3919716e27bbff29.ctex"]
 
 [params]
 
