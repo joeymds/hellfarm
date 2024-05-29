@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://j8wtlkpge53l"]
+[gd_scene load_steps=10 format=3 uid="uid://j8wtlkpge53l"]
 
 [ext_resource type="PackedScene" uid="uid://bookbafjqraub" path="res://scenes/game_objects/player/player.tscn" id="1_csm0f"]
 [ext_resource type="TileSet" uid="uid://6rxk48hs627u" path="res://resources/tileset.tres" id="1_iao4q"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bus8dyhxxl0hh" path="res://scenes/manager/enemy_manager.tscn" id="4_q4q4p"]
 [ext_resource type="PackedScene" uid="uid://bxwutvpjwqebw" path="res://scenes/manager/experience_manager.tscn" id="4_wkpd0"]
 [ext_resource type="PackedScene" uid="uid://dtr4rooh7kyds" path="res://scenes/ui/arena_time_ui.tscn" id="5_qs8h7"]
+[ext_resource type="PackedScene" uid="uid://2sjyd76iwdly" path="res://scenes/manager/upgrade_manager.tscn" id="6_fmfw8"]
 [ext_resource type="PackedScene" uid="uid://b2cu65nfos6gc" path="res://scenes/ui/experience_bar.tscn" id="8_c2hmi"]
 
 [node name="main" type="Node"]
@@ -23,6 +24,9 @@ ExperienceMan = NodePath("../ExperienceManager")
 SpawnRate = 0.7
 
 [node name="ExperienceManager" parent="." instance=ExtResource("4_wkpd0")]
+
+[node name="UpgradeManager" parent="." node_paths=PackedStringArray("ExperienceMgr") instance=ExtResource("6_fmfw8")]
+ExperienceMgr = NodePath("../ExperienceManager")
 
 [node name="GameCamera" parent="." instance=ExtResource("3_ioia8")]
 

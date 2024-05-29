@@ -5,10 +5,10 @@ namespace HellFarm.Code.Events;
 public partial class GameEvents : Node
 {
 	[Signal]
-	public delegate void ExperienceVialCollectedEventHandler(float number);
+	public delegate void ExperienceVialCollectedEventHandler(int number);
 	
 
-	public void EmitExperienceVialCollected(float number)
+	public void EmitExperienceVialCollected(int number)
 	{
 		EmitSignal("ExperienceVialCollected", number);	
 	}

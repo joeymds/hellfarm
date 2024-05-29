@@ -28,7 +28,7 @@ public partial class HealthComponent : Node
 		if (CurrentHealth == 0)
 		{
 			EmitSignal("Died");
-			Owner.QueueFree();
+			//Owner.QueueFree();
 		}
 	}
 }

@@ -29,8 +29,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_p8yb3"]
 resource_name = "death"
-length = 0.666683
-step = 0.166667
+length = 0.500008
+step = 0.04
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -38,10 +38,24 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.166667, 0.333333, 0.5),
+"times": PackedFloat32Array(0, 0.12, 0.24, 0.36),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [8, 9, 10, 10]
+"values": [8, 9, 10, 11]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.48),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"EndOfLife"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_q4ftr"]
@@ -183,7 +197,8 @@ shape = SubResource("CircleShape2D_qnvkp")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -4)
 texture = ExtResource("6_gsrod")
-hframes = 11
+hframes = 4
+vframes = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

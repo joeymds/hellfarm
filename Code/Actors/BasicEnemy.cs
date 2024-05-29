@@ -7,13 +7,29 @@ public partial class BasicEnemy : CharacterBody2D
 
 	private HealthComponent _healthComponent;
 	private AnimationTree _animationTree;
+	private AnimationPlayer _animationPlayer;
 	private Area2D _area2D;
+
+	private bool isDead;
 	
 
 	public override void _Ready()
 	{
 		_healthComponent = GetNode<HealthComponent>("HealthComponent");
 		_animationTree = GetNode<AnimationTree>("AnimationTree");
+		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		
+		_healthComponent.Died += OnDeath;
+		
+		isDead = false;
+
+	}
+
+	private void OnDeath()
+	{
+		isDead = true;
+		_animationTree.Active = false;
+		_animationPlayer.Play("death");
 	}
 
 	public override void _Process(double delta)
@@ -27,7 +43,9 @@ public partial class BasicEnemy : CharacterBody2D
 		var normalizedVelocity = Velocity.Normalized();
 		
 		_animationTree.Set("parameters/Chase/blend_position", normalizedVelocity);
-		MoveAndSlide();
+		
+		if (!isDead)
+			MoveAndSlide();
 	}
 	
 	
@@ -39,5 +57,10 @@ public partial class BasicEnemy : CharacterBody2D
 			return (playerNode.GlobalPosition - GlobalPosition).Normalized();
 		}
 		return Vector2.Zero;
+	}
+
+	private void EndOfLife()
+	{
+		QueueFree();
 	}
 }
