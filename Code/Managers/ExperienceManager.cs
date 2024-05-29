@@ -8,13 +8,12 @@ public partial class ExperienceManager : Node
 	[Signal] public delegate void ExperienceUpdatedEventHandler(float currentExperience, float targetExperience);
 	[Signal] public delegate void LevelUpEventHandler(int newLevel);
 
-	
+
 	private const float TargetExperienceGrowth = 5;
-	
 	
 	public float CurrentExperience { get; private set; }
 	public float CurrentLevel { get; private set; }
-	public float TargetExperience { get; private set; } = 5;
+	public float TargetExperience { get; private set; } = 2;
 	
 
 	private GameEvents _gameEvents;

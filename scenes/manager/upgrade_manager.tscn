@@ -6,3 +6,4 @@
 [node name="UpgradeManager" type="Node"]
 script = ExtResource("1_284mm")
 UpgradePool = Array[Resource]([ExtResource("2_da1ex")])
+UpgradeScreenScene = null
