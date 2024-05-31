@@ -1,8 +1,9 @@
-using Actors;
 using System;
 using System.Linq;
 using Godot;
 using HellFarm.Code.Abilities;
+using HellFarm.Code.Events;
+using HellFarm.Code.Upgrades;
 
 namespace HellFarm.Code.Controllers;
 
@@ -11,14 +12,41 @@ public partial class SwordAbilityController : Node
 	[Export] public PackedScene SwordAbility { get; set; }
 	[Export] public float MaxRange { get; set; }
 	[Export] public float Damage { get; set; } = 5;
-
 	
-	private Timer timer;
+	private GameEvents _gameEvents;
+	private Timer _timer;
+
+	private double baseWaitTime;
 	
 	public override void _Ready()
 	{
-		timer = GetNode<Timer>("Timer");
-		timer.Timeout += OnTimerTimeout;
+		_gameEvents = GetNode<GameEvents>("/root/GameEvents");
+		_gameEvents.AbilityUpgradeAdded += OnAbilityUpgradeAdded;
+		
+		_timer = GetNode<Timer>("Timer");
+		_timer.Timeout += OnTimerTimeout;
+		
+		baseWaitTime = _timer.WaitTime;
+	}
+
+	private void OnAbilityUpgradeAdded(AbilityUpgrade upgrade)
+	{
+		if (upgrade.Id != "sword_rate")
+			return;
+
+		var percentReduction = _gameEvents.CurrentUpgrades
+			.Where(x => x.Id == "sword_rate")
+			.Sum(x => x.Quantity * .1);
+		
+		var newWaitTime = baseWaitTime * (1 - percentReduction);
+		
+		if (newWaitTime < 0.05)
+			newWaitTime = 0.05;
+		
+		_timer.WaitTime = newWaitTime;
+		_timer.Start();
+		
+		GD.Print($"Timer WaitTime: {_timer.WaitTime}");
 	}
 
 	private void OnTimerTimeout()
@@ -43,16 +71,15 @@ public partial class SwordAbilityController : Node
 		});
 
 		using var swordInstance = SwordAbility.Instantiate() as SwordAbility;
-		player.GetParent().AddChild(swordInstance);
+		var foregroundLayer = GetTree().GetFirstNodeInGroup("foreground_layer") as Node2D;
+		if (foregroundLayer == null) return;
+		
+		foregroundLayer.AddChild(swordInstance);
 		swordInstance.HitBoxComponent.Damage = Damage;
 		swordInstance!.GlobalPosition = enemies[0].GlobalPosition;
 		swordInstance.GlobalPosition += Vector2.Right.Rotated((float)(GD.Randfn(0, Mathf.Pi / Mathf.Tau))) * 10;
 
 		var enemyDirection = enemies[0].GlobalPosition - swordInstance.GlobalPosition;
 		swordInstance.Rotation = enemyDirection.Angle();
-	}
-
-	public override void _Process(double delta)
-	{
 	}
 }

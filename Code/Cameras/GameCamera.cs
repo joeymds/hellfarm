@@ -1,5 +1,5 @@
-using Actors;
 using Godot;
+using Player = HellFarm.Code.Actors.Player;
 
 namespace HellFarm.Code.Cameras;
 

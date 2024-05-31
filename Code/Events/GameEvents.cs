@@ -1,15 +1,41 @@
+using System.Collections.Generic;
 using Godot;
+using HellFarm.Code.Managers;
+using HellFarm.Code.Upgrades;
 
 namespace HellFarm.Code.Events;
 
 public partial class GameEvents : Node
 {
-	[Signal]
-	public delegate void ExperienceVialCollectedEventHandler(int number);
-	
+    private List<Upgrade> _currentUpgrades;
+    
+    public List<Upgrade> CurrentUpgrades
+    {
+        get
+        {
+            if (_currentUpgrades == null)
+            {
+                _currentUpgrades = new List<Upgrade>();
+            }
 
-	public void EmitExperienceVialCollected(int number)
-	{
-		EmitSignal("ExperienceVialCollected", number);	
-	}
+            return _currentUpgrades;
+        }
+        set => _currentUpgrades = value;
+    }
+
+    [Signal]
+    public delegate void ExperienceVialCollectedEventHandler(int number);
+
+    [Signal]
+    public delegate void AbilityUpgradeAddedEventHandler(AbilityUpgrade upgrade);
+    
+    public void EmitExperienceVialCollected(int number)
+    {
+        EmitSignal("ExperienceVialCollected", number);
+    }
+
+    public void EmitAbilityUpgradeAdded(AbilityUpgrade upgrade)
+    {
+        EmitSignal("AbilityUpgradeAdded", upgrade);
+    }
 }

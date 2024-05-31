@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Godot;
+using HellFarm.Code.Events;
 using HellFarm.Code.UI;
 using HellFarm.Code.Upgrades;
 
@@ -11,10 +12,11 @@ public partial class UpgradeManager : Node
     [Export] public AbilityUpgrade[] UpgradePool { get; set; }
     [Export] public PackedScene UpgradeScreenScene { get; set; }
     
-    private Dictionary<string, Dictionary<string, object>> currentUpgrades = new();
+    private GameEvents _gameEvents;
     
     public override void _Ready()
     {
+        _gameEvents = GetNode<GameEvents>("/root/GameEvents");
         ExperienceMgr.LevelUp += OnLevelUp;    
     }
 
@@ -37,20 +39,32 @@ public partial class UpgradeManager : Node
 
     private void ApplyUpgrade(AbilityUpgrade upgrade)
     {
-        var hasUpgrade = currentUpgrades.ContainsKey(upgrade.Id);
-        if (!hasUpgrade)
+        if (_gameEvents.CurrentUpgrades.Count > 0)
         {
-            currentUpgrades[upgrade.Id] = new Dictionary<string, object> {
-                {"resource", upgrade},
-                {"quantity", 1}
-            };
-        }
+            var hasUpgrade = _gameEvents.CurrentUpgrades.Find(u => u.Id == upgrade.Id);
+            if (hasUpgrade == null)
+            {
+                InsertUpgrade(upgrade);
+            }
+            else
+            {
+                hasUpgrade.Quantity++;
+            }
+        } 
         else
         {
-            var upgradeInfoDict = currentUpgrades[upgrade.Id];
-            upgradeInfoDict["quantity"] = (int)upgradeInfoDict["quantity"] + 1;
+            InsertUpgrade(upgrade);
         }
-        
-        GD.Print(currentUpgrades);
+        _gameEvents.EmitAbilityUpgradeAdded(upgrade);
+    }
+
+    private void InsertUpgrade(AbilityUpgrade upgrade)
+    {
+        _gameEvents.CurrentUpgrades.Add(new Upgrade
+        {
+            Id = upgrade.Id,
+            Quantity = 1,
+            AbilityUpgrade = upgrade
+        });
     }
 }

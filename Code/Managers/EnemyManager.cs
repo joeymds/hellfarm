@@ -1,5 +1,6 @@
-using Actors;
+
 using Godot;
+using Player = HellFarm.Code.Actors.Player;
 
 namespace HellFarm.Code.Managers;
 
@@ -27,8 +28,10 @@ public partial class EnemyManager : Node
 		var spawnPosition = player.GlobalPosition + (randomDirection * SPAWN_RADIUS);
 
 		var enemy = BasicEnemyScene.Instantiate() as BasicEnemy;
-		GetParent().AddChild(enemy);
+		var entitiesLayer = GetTree().GetFirstNodeInGroup("entities_layer") as Node2D;
+		if (entitiesLayer == null) return;
+		
+		entitiesLayer.AddChild(enemy);
 		enemy.GlobalPosition = spawnPosition;
-
 	}
 }
