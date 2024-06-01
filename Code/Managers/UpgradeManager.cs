@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Godot;
 using HellFarm.Code.Events;
 using HellFarm.Code.UI;

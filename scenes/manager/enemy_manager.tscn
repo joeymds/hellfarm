@@ -9,4 +9,5 @@ BasicEnemyScene = ExtResource("2_y4bn1")
 SpawnRate = 0.2
 
 [node name="Timer" type="Timer" parent="."]
+one_shot = true
 autostart = true

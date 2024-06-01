@@ -1,6 +1,8 @@
 using Godot;
 using HellFarm.Code.Components;
 
+namespace HellFarm.Code.Actors;
+
 public partial class BasicEnemy : CharacterBody2D
 {
 	[Export] public float MaxSpeed { get; set; } = 45.0f;

@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://c101xeder555f"]
 
-[ext_resource type="Texture2D" uid="uid://b1e5w6dxesr7j" path="res://scenes/ability/sword_ability/sword.png" id="1_02sf1"]
 [ext_resource type="Script" path="res://Code/Abilities/SwordAbility.cs" id="1_7gtjd"]
 [ext_resource type="PackedScene" uid="uid://br48orvfmoktc" path="res://scenes/components/hit_box_component.tscn" id="1_aecrn"]
+[ext_resource type="Texture2D" uid="uid://glpmcea1c1s2" path="res://scenes/ability/sword_ability/rake-01.png" id="3_dd5sa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6fh80"]
 size = Vector2(30, 30)
@@ -124,5 +124,5 @@ libraries = {
 autoplay = "swing"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_02sf1")
+texture = ExtResource("3_dd5sa")
 offset = Vector2(0, -4)
