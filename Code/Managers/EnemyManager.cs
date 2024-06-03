@@ -28,6 +28,33 @@ public partial class EnemyManager : Node
 		ArenaTimeManager.ArenaDifficultyIncreased += OnArenaDifficultyIncreased;
 	}
 
+	private Vector2 GetSpawnPosition()
+	{
+		var player = GetTree().GetFirstNodeInGroup("player") as Player;
+		if (player == null)
+		{
+			return Vector2.Zero;
+		} 
+		
+		var randomDirection = Vector2.Right.Rotated((float)GD.RandRange(0, Mathf.Tau));
+		var spawnPosition = player.GlobalPosition + (randomDirection * SpawnRadius);
+
+		var queryParams = PhysicsRayQueryParameters2D.Create(player.GlobalPosition, spawnPosition,1 );
+		var result = GetTree().Root.World2D.DirectSpaceState.IntersectRay(queryParams);
+
+		if (result.Count == 0)
+		{
+			// clear!
+			return spawnPosition;
+		}
+		else
+		{
+			// we have a collision
+			return player.GlobalPosition;
+		}
+		
+	}
+	
 	private void OnTimerTimeout()
 	{
 		_timer.Start();
@@ -35,15 +62,14 @@ public partial class EnemyManager : Node
 		var player = GetTree().GetFirstNodeInGroup("player") as Player;
 		if (player == null) return;
 
-		var randomDirection = Vector2.Right.Rotated((float)GD.RandRange(0, Mathf.Tau));
-		var spawnPosition = player.GlobalPosition + (randomDirection * SpawnRadius);
+		
 
 		var enemy = BasicEnemyScene.Instantiate() as Actors.BasicEnemy;
 		var entitiesLayer = GetTree().GetFirstNodeInGroup("entities_layer") as Node2D;
 		if (entitiesLayer == null) return;
 		
 		entitiesLayer.AddChild(enemy);
-		enemy.GlobalPosition = spawnPosition;
+		enemy.GlobalPosition = GetSpawnPosition();
 	}
 		
 	private void OnArenaDifficultyIncreased(int arenaDifficulty)
