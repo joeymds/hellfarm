@@ -1,0 +1,62 @@
+[gd_scene load_steps=8 format=3 uid="uid://vam63pg7bd4"]
+
+[ext_resource type="Texture2D" uid="uid://d0so7x6bule2e" path="res://scenes/ability/sickle_ability/sickle.png" id="1_0x4d1"]
+[ext_resource type="Script" path="res://Code/Abilities/SickleAbility.cs" id="1_dcc0k"]
+[ext_resource type="PackedScene" uid="uid://br48orvfmoktc" path="res://scenes/components/hit_box_component.tscn" id="3_3iwgl"]
+
+[sub_resource type="Animation" id="Animation_tygld"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ahq5n"]
+resource_name = "default"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nssmr"]
+_data = {
+"RESET": SubResource("Animation_tygld"),
+"default": SubResource("Animation_ahq5n")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_iahfd"]
+
+[node name="SickleAbility" type="Node2D"]
+script = ExtResource("1_dcc0k")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nssmr")
+}
+autoplay = "default"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0x4d1")
+
+[node name="HitBoxComponent" parent="." instance=ExtResource("3_3iwgl")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
+shape = SubResource("CircleShape2D_iahfd")

@@ -1,5 +1,7 @@
 using Godot;
 using HellFarm.Code.Components;
+using HellFarm.Code.Events;
+using HellFarm.Code.Upgrades;
 
 namespace HellFarm.Code.Actors
 {
@@ -16,14 +18,18 @@ namespace HellFarm.Code.Actors
 		private Timer _damageIntervalTimer;
 		private ProgressBar _healthBar;
 		private AnimationPlayer _animationPlayer;
+		private Node _abilities;
+		private GameEvents _gameEvents;
 		
 		public override void _Ready()
 		{
+			_gameEvents = GetNode<GameEvents>("/root/GameEvents");
 			_area2D = GetNode<Area2D>("CollisionArea2D");
 			_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 			HealthComponent = GetNode<HealthComponent>("HealthComponent");
 			_damageIntervalTimer = GetNode<Timer>("DamageIntervalTimer");
 			_healthBar = GetNode<ProgressBar>("HealthBar");
+			_abilities = GetNode<Node>("Abilities");
 			
 			_area2D.BodyEntered += OnBodyEntered;
 			_area2D.BodyExited += OnBodyExited;
@@ -31,11 +37,21 @@ namespace HellFarm.Code.Actors
 			HealthComponent.HealthChanged += OnHealthChanged;
 			HealthComponent.Died += OnDeath;
 			_damageIntervalTimer.Timeout += OnDamageIntervalTimerTimeout;
-
+			_gameEvents.AbilityUpgradeAdded += OnAbilityUpgradeAdded;
+			
 			_isDead = false;
 			
 			_animationPlayer.Play("run");
+			
 			UpdateHealthDisplay();
+		}
+
+		private void OnAbilityUpgradeAdded(AbilityUpgrade upgrade)
+		{
+			if (upgrade is not Ability)
+			 	return;
+			
+			_abilities.AddChild(((Ability)upgrade).AbilityControllerScene.Instantiate());
 		}
 
 		private void OnDeath()

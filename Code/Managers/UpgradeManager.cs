@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using HellFarm.Code.Events;
 using HellFarm.Code.UI;
@@ -19,25 +20,13 @@ public partial class UpgradeManager : Node
         ExperienceMgr.LevelUp += OnLevelUp;    
     }
 
-    private void OnLevelUp(int newlevel)
-    {
-        var chosenUpgrade = UpgradePool[GD.RandRange(0, UpgradePool.Length - 1)];
-        if (chosenUpgrade == null)
-            return;
-        
-        var upgradeScreenInstance = UpgradeScreenScene.Instantiate<UpgradeScreen>();
-        AddChild(upgradeScreenInstance);
-        upgradeScreenInstance.SetAbilityUpgrades(new[] {chosenUpgrade});
-        upgradeScreenInstance.UpgradeSelected += OnUpgradeSelected;
-    }
-
     private void OnUpgradeSelected(AbilityUpgrade upgrade)
     {
         ApplyUpgrade(upgrade);
     }
 
     private void ApplyUpgrade(AbilityUpgrade upgrade)
-    {
+    { 
         if (_gameEvents.CurrentUpgrades.Count > 0)
         {
             var hasUpgrade = _gameEvents.CurrentUpgrades.Find(u => u.Id == upgrade.Id);
@@ -57,6 +46,22 @@ public partial class UpgradeManager : Node
         _gameEvents.EmitAbilityUpgradeAdded(upgrade);
     }
 
+    private AbilityUpgrade[] PickUpgrade()
+    {
+        var chosenUpgrades = new AbilityUpgrade[2];
+        
+        AbilityUpgrade[] filteredUpgrades = (AbilityUpgrade[])UpgradePool.Clone();
+        
+        for (var i = 0; i < 2; i++)
+        {
+            var chosenUpgrade = filteredUpgrades[GD.RandRange(0, filteredUpgrades.Length - 1)];
+            chosenUpgrades[i] = chosenUpgrade;
+            filteredUpgrades = filteredUpgrades.Where(u => u.Id != chosenUpgrade.Id).ToArray();
+        }
+
+        return chosenUpgrades;
+    }
+
     private void InsertUpgrade(AbilityUpgrade upgrade)
     {
         _gameEvents.CurrentUpgrades.Add(new Upgrade
@@ -65,5 +70,18 @@ public partial class UpgradeManager : Node
             Quantity = 1,
             AbilityUpgrade = upgrade
         });
+    }
+    
+    private void OnLevelUp(int newlevel)
+    {
+        var chosenUpgrade = UpgradePool[GD.RandRange(0, UpgradePool.Length - 1)];
+        if (chosenUpgrade == null)
+            return;
+        
+        var chosenUpgrades = PickUpgrade();
+        var upgradeScreenInstance = UpgradeScreenScene.Instantiate<UpgradeScreen>();
+        AddChild(upgradeScreenInstance);
+        upgradeScreenInstance.SetAbilityUpgrades(chosenUpgrades);
+        upgradeScreenInstance.UpgradeSelected += OnUpgradeSelected;
     }
 }

@@ -32,27 +32,24 @@ public partial class EnemyManager : Node
 	{
 		var player = GetTree().GetFirstNodeInGroup("player") as Player;
 		if (player == null)
-		{
 			return Vector2.Zero;
-		} 
-		
+
+		var spawnPosition = Vector2.Zero;
 		var randomDirection = Vector2.Right.Rotated((float)GD.RandRange(0, Mathf.Tau));
-		var spawnPosition = player.GlobalPosition + (randomDirection * SpawnRadius);
-
-		var queryParams = PhysicsRayQueryParameters2D.Create(player.GlobalPosition, spawnPosition,1 );
-		var result = GetTree().Root.World2D.DirectSpaceState.IntersectRay(queryParams);
-
-		if (result.Count == 0)
-		{
-			// clear!
-			return spawnPosition;
-		}
-		else
-		{
-			// we have a collision
-			return player.GlobalPosition;
-		}
 		
+		for (var i = 0; i < 4; i++)
+		{
+			spawnPosition = player.GlobalPosition + (randomDirection * SpawnRadius);
+		
+			var queryParams = PhysicsRayQueryParameters2D.Create(player.GlobalPosition, spawnPosition,1 );
+			var result = GetTree().Root.World2D.DirectSpaceState.IntersectRay(queryParams);
+			if (result.Count == 0)
+				break;
+			
+			randomDirection = randomDirection.Rotated(Mathf.DegToRad(90));
+		}
+
+		return spawnPosition;
 	}
 	
 	private void OnTimerTimeout()

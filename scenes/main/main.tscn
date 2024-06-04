@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://j8wtlkpge53l"]
+[gd_scene load_steps=15 format=3 uid="uid://j8wtlkpge53l"]
 
 [ext_resource type="Script" path="res://Code/Scenes/Main.cs" id="1_4axhp"]
 [ext_resource type="PackedScene" uid="uid://bookbafjqraub" path="res://scenes/game_objects/player/player.tscn" id="1_csm0f"]
@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://2sjyd76iwdly" path="res://scenes/manager/upgrade_manager.tscn" id="6_fmfw8"]
 [ext_resource type="PackedScene" uid="uid://xjg3hcmdy0g8" path="res://scenes/ui/upgrade_screen.tscn" id="7_0gkba"]
 [ext_resource type="PackedScene" uid="uid://b2cu65nfos6gc" path="res://scenes/ui/experience_bar.tscn" id="8_c2hmi"]
+[ext_resource type="Resource" uid="uid://brgtdhccluh8q" path="res://resources/upgrades/sword_rate.tres" id="9_vt0xd"]
+[ext_resource type="Resource" uid="uid://cql2l11dmdgmm" path="res://resources/upgrades/sickle.tres" id="10_fpqho"]
 
 [node name="main" type="Node"]
 script = ExtResource("1_4axhp")
@@ -33,6 +35,7 @@ SpawnRate = 1.5
 
 [node name="UpgradeManager" parent="." node_paths=PackedStringArray("ExperienceMgr") instance=ExtResource("6_fmfw8")]
 ExperienceMgr = NodePath("../ExperienceManager")
+UpgradePool = Array[Resource]([ExtResource("9_vt0xd"), ExtResource("10_fpqho")])
 UpgradeScreenScene = ExtResource("7_0gkba")
 
 [node name="GameCamera" parent="." instance=ExtResource("3_ioia8")]
