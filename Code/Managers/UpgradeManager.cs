@@ -43,18 +43,34 @@ public partial class UpgradeManager : Node
         {
             InsertUpgrade(upgrade);
         }
+
+        if (upgrade.MaxQuantity > 0)
+        {
+            var currentQuantity = _gameEvents.CurrentUpgrades.Find(u => u.Id == upgrade.Id).Quantity;
+            if (currentQuantity == upgrade.MaxQuantity)
+            {
+                UpgradePool = UpgradePool.Where(u => u.Id != upgrade.Id).ToArray();
+            }
+        }
+        
         _gameEvents.EmitAbilityUpgradeAdded(upgrade);
     }
 
     private AbilityUpgrade[] PickUpgrade()
     {
-        var chosenUpgrades = new AbilityUpgrade[2];
-        
-        AbilityUpgrade[] filteredUpgrades = (AbilityUpgrade[])UpgradePool.Clone();
+        //var chosenUpgrades = new AbilityUpgrade[2];
+        var chosenUpgrades = new AbilityUpgrade[UpgradePool.Length];
+        var filteredUpgrades = (AbilityUpgrade[])UpgradePool.Clone();
         
         for (var i = 0; i < 2; i++)
         {
+            if (filteredUpgrades.Length == 0)
+                break;
+            
             var chosenUpgrade = filteredUpgrades[GD.RandRange(0, filteredUpgrades.Length - 1)];
+            if (chosenUpgrade == null)
+                break;
+            
             chosenUpgrades[i] = chosenUpgrade;
             filteredUpgrades = filteredUpgrades.Where(u => u.Id != chosenUpgrade.Id).ToArray();
         }
@@ -74,6 +90,9 @@ public partial class UpgradeManager : Node
     
     private void OnLevelUp(int newlevel)
     {
+        if (UpgradePool.Length == 0)
+            return;
+        
         var chosenUpgrade = UpgradePool[GD.RandRange(0, UpgradePool.Length - 1)];
         if (chosenUpgrade == null)
             return;
