@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0so7x6bule2e"
-path="res://.godot/imported/sickle.png-01c6bb0d14bd55d2737be8f9bff84f12.ctex"
+uid="uid://dxiypoyb5rx00"
+path="res://.godot/imported/sickle_01.png-75aa3d87754f2120b0f1a49cfc37e51a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ability/sickle_ability/sickle.png"
-dest_files=["res://.godot/imported/sickle.png-01c6bb0d14bd55d2737be8f9bff84f12.ctex"]
+source_file="res://scenes/ability/sickle_ability/sickle_01.png"
+dest_files=["res://.godot/imported/sickle_01.png-75aa3d87754f2120b0f1a49cfc37e51a.ctex"]
 
 [params]
 

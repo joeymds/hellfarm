@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://vam63pg7bd4"]
 
-[ext_resource type="Texture2D" uid="uid://d0so7x6bule2e" path="res://scenes/ability/sickle_ability/sickle.png" id="1_0x4d1"]
 [ext_resource type="Script" path="res://Code/Abilities/SickleAbility.cs" id="1_dcc0k"]
+[ext_resource type="Texture2D" uid="uid://dxiypoyb5rx00" path="res://scenes/ability/sickle_ability/sickle_01.png" id="2_i8qq8"]
 [ext_resource type="PackedScene" uid="uid://br48orvfmoktc" path="res://scenes/components/hit_box_component.tscn" id="3_3iwgl"]
 
 [sub_resource type="Animation" id="Animation_tygld"]
@@ -54,7 +54,8 @@ libraries = {
 autoplay = "default"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_0x4d1")
+texture = ExtResource("2_i8qq8")
+offset = Vector2(0, 2)
 
 [node name="HitBoxComponent" parent="." instance=ExtResource("3_3iwgl")]
 

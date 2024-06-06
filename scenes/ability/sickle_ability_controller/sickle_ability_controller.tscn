@@ -8,5 +8,5 @@ script = ExtResource("1_55soy")
 SickleScene = ExtResource("2_yi84e")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 4.0
 autostart = true

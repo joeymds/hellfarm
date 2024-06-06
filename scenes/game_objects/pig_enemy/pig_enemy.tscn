@@ -1,0 +1,204 @@
+[gd_scene load_steps=21 format=3 uid="uid://buuu07hownuol"]
+
+[ext_resource type="Script" path="res://Code/Actors/PigEnemy.cs" id="1_daiwk"]
+[ext_resource type="PackedScene" uid="uid://dmjyiqtnytwof" path="res://scenes/components/health_component.tscn" id="1_hpsdp"]
+[ext_resource type="Texture2D" uid="uid://dftrw4ci8w1ym" path="res://scenes/game_objects/pig_enemy/pig-01.png" id="1_svmcw"]
+[ext_resource type="PackedScene" uid="uid://dldd4cbxgcxx" path="res://scenes/components/hurt_box_component.tscn" id="3_7c8wr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2ipaq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cpbwb"]
+radius = 12.0
+
+[sub_resource type="Animation" id="Animation_t5iqg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_sy2m6"]
+resource_name = "death"
+length = 0.50001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"EndOfLife"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_vayye"]
+resource_name = "down"
+length = 0.20001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_i7pfk"]
+resource_name = "left"
+length = 0.20001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_52e07"]
+resource_name = "right"
+length = 0.20001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_ey0rt"]
+resource_name = "up"
+length = 0.20001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yrfl3"]
+_data = {
+"RESET": SubResource("Animation_t5iqg"),
+"death": SubResource("Animation_sy2m6"),
+"down": SubResource("Animation_vayye"),
+"left": SubResource("Animation_i7pfk"),
+"right": SubResource("Animation_52e07"),
+"up": SubResource("Animation_ey0rt")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4bq1c"]
+animation = &"left"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_axwy6"]
+animation = &"down"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dxrlx"]
+animation = &"up"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4n3a5"]
+animation = &"right"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_2hf47"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_4bq1c")
+blend_point_0/pos = Vector2(-1, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_axwy6")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_dxrlx")
+blend_point_2/pos = Vector2(0, -1)
+blend_point_3/node = SubResource("AnimationNodeAnimation_4n3a5")
+blend_point_3/pos = Vector2(1, 0)
+blend_mode = 1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_v8cfb"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_lruja"]
+states/Chase/node = SubResource("AnimationNodeBlendSpace2D_2hf47")
+states/Chase/position = Vector2(453, 106)
+states/Start/position = Vector2(221, 102)
+transitions = ["Start", "Chase", SubResource("AnimationNodeStateMachineTransition_v8cfb")]
+
+[node name="PigEnemy" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 9
+script = ExtResource("1_daiwk")
+
+[node name="HealthComponent" parent="." instance=ExtResource("1_hpsdp")]
+MaxHealth = 15.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_2ipaq")
+
+[node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("HealthComp") instance=ExtResource("3_7c8wr")]
+HealthComp = NodePath("../HealthComponent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_cpbwb")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -10)
+texture = ExtResource("1_svmcw")
+hframes = 4
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_yrfl3")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_yrfl3")
+}
+tree_root = SubResource("AnimationNodeStateMachine_lruja")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Chase/blend_position = Vector2(0.00120342, -0.981043)

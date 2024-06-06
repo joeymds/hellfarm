@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b1e5w6dxesr7j"
-path="res://.godot/imported/sword.png-119f84f88e7c76c57174c8817029a806.ctex"
+uid="uid://dftrw4ci8w1ym"
+path="res://.godot/imported/pig-01.png-f3bfb040d8b5dd59646df4212e748ab3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/ability/sword_ability/sword.png"
-dest_files=["res://.godot/imported/sword.png-119f84f88e7c76c57174c8817029a806.ctex"]
+source_file="res://scenes/game_objects/pig_enemy/pig-01.png"
+dest_files=["res://.godot/imported/pig-01.png-f3bfb040d8b5dd59646df4212e748ab3.ctex"]
 
 [params]
 
