@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://xjg3hcmdy0g8" path="res://scenes/ui/upgrade_screen.tscn" id="7_0gkba"]
 [ext_resource type="PackedScene" uid="uid://b2cu65nfos6gc" path="res://scenes/ui/experience_bar.tscn" id="8_c2hmi"]
 [ext_resource type="Resource" uid="uid://brgtdhccluh8q" path="res://resources/upgrades/sword_rate.tres" id="9_vt0xd"]
-[ext_resource type="Resource" uid="uid://cql2l11dmdgmm" path="res://resources/upgrades/sickle.tres" id="10_fpqho"]
+[ext_resource type="Resource" path="res://resources/upgrades/sickle.tres" id="10_fpqho"]
 [ext_resource type="PackedScene" uid="uid://buuu07hownuol" path="res://scenes/game_objects/pig_enemy/pig_enemy.tscn" id="15_p7rkv"]
 
 [node name="main" type="Node"]
@@ -54,5 +54,14 @@ unique_name_in_owner = true
 position = Vector2(226, 61)
 
 [node name="PigEnemy" parent="Entities" instance=ExtResource("15_p7rkv")]
+
+[node name="PigEnemy2" parent="Entities" instance=ExtResource("15_p7rkv")]
+position = Vector2(302, -81)
+
+[node name="PigEnemy3" parent="Entities" instance=ExtResource("15_p7rkv")]
+position = Vector2(80, 74)
+
+[node name="PigEnemy4" parent="Entities" instance=ExtResource("15_p7rkv")]
+position = Vector2(125, -63)
 
 [node name="Foreground" type="Node2D" parent="." groups=["foreground_layer"]]

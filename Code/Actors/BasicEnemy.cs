@@ -3,7 +3,7 @@ using HellFarm.Code.Components;
 
 namespace HellFarm.Code.Actors;
 
-public partial class BasicEnemy : CharacterBody2D
+public partial class BasicEnemy : CharacterBody2D, IEnemy
 {
 	[Export] public float MaxSpeed { get; set; } = 45.0f;
 
@@ -21,17 +21,8 @@ public partial class BasicEnemy : CharacterBody2D
 		_animationTree = GetNode<AnimationTree>("AnimationTree");
 		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
 		
-		_healthComponent.Died += OnDeath;
-		
 		isDead = false;
 
-	}
-
-	private void OnDeath()
-	{
-		isDead = true;
-		_animationTree.Active = false;
-		_animationPlayer.Play("death");
 	}
 
 	public override void _Process(double delta)
@@ -61,8 +52,15 @@ public partial class BasicEnemy : CharacterBody2D
 		return Vector2.Zero;
 	}
 
-	private void EndOfLife()
+	public void EndOfLife()
 	{
 		QueueFree();
+	}
+
+	public void DeathInitiated()
+	{
+		isDead = true;
+		_animationTree.Active = false;
+		_animationPlayer.Play("death");
 	}
 }
