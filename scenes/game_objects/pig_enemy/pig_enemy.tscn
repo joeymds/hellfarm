@@ -177,7 +177,7 @@ MaxHealth = 15.0
 
 [node name="VelocityComponent" parent="." instance=ExtResource("6_16tbk")]
 MaxSpeed = 60
-Acceleration = 2.0
+Acceleration = 8.0
 
 [node name="DeathComponent" parent="." node_paths=PackedStringArray("HealthComponent") instance=ExtResource("3_skhrf")]
 HealthComponent = NodePath("../HealthComponent")

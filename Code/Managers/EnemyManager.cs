@@ -9,16 +9,20 @@ public partial class EnemyManager : Node
 	private const int SpawnRadius = 350;
 	
 	[Export] public PackedScene BasicEnemyScene { get; set; }
+	[Export] public PackedScene PigEnemyScene { get; set; }
 	[Export] public ArenaTimeManager ArenaTimeManager { get; set; }
 	[Export] public float SpawnRate { get; set; } = 1.0f;
 	
 	
 	private Timer _timer;
 	private double _baseSpawnTime = 0;
-	
+	private WeightedTable _enemyTable;
 	
 	public override void _Ready()
 	{
+		_enemyTable = new WeightedTable();
+		_enemyTable.AddItem(new EnemyItem{ Weight = 10, EnemyScene = BasicEnemyScene });
+		
 		_timer = GetNode<Timer>("Timer");
 		_timer.WaitTime = SpawnRate;
 		
@@ -59,9 +63,9 @@ public partial class EnemyManager : Node
 		var player = GetTree().GetFirstNodeInGroup("player") as Player;
 		if (player == null) return;
 
-		
 
-		var enemy = BasicEnemyScene.Instantiate() as Actors.BasicEnemy;
+		var enemyScene = _enemyTable.PickItem();
+		var enemy = enemyScene.EnemyScene.Instantiate() as Node2D;
 		var entitiesLayer = GetTree().GetFirstNodeInGroup("entities_layer") as Node2D;
 		if (entitiesLayer == null) return;
 		
@@ -75,6 +79,10 @@ public partial class EnemyManager : Node
 		timeOff = Mathf.Min(timeOff, 0.7);
 		
 		_timer.WaitTime = _baseSpawnTime - timeOff;
-		GD.Print($"timeOff: {timeOff}");
+
+		if (arenaDifficulty == 6)
+		{
+			_enemyTable.AddItem(new EnemyItem { Weight = 20, EnemyScene = PigEnemyScene });
+		}
 	}
 }

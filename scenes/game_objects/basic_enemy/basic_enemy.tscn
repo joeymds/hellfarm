@@ -190,7 +190,8 @@ DropPercentage = 0.35
 HealthComp = NodePath("../HealthComponent")
 
 [node name="VelocityComponent" parent="." instance=ExtResource("5_1d1fo")]
-Acceleration = 0.5
+MaxSpeed = 55
+Acceleration = 6.0
 
 [node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("HealthComp") instance=ExtResource("4_1wywg")]
 HealthComp = NodePath("../HealthComponent")
