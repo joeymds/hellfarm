@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://j8wtlkpge53l"]
+[gd_scene load_steps=15 format=3 uid="uid://j8wtlkpge53l"]
 
 [ext_resource type="Script" path="res://Code/Scenes/Main.cs" id="1_4axhp"]
 [ext_resource type="PackedScene" uid="uid://bookbafjqraub" path="res://scenes/game_objects/player/player.tscn" id="1_csm0f"]
@@ -13,8 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://xjg3hcmdy0g8" path="res://scenes/ui/upgrade_screen.tscn" id="7_0gkba"]
 [ext_resource type="PackedScene" uid="uid://b2cu65nfos6gc" path="res://scenes/ui/experience_bar.tscn" id="8_c2hmi"]
 [ext_resource type="Resource" uid="uid://brgtdhccluh8q" path="res://resources/upgrades/sword_rate.tres" id="9_vt0xd"]
-[ext_resource type="Resource" path="res://resources/upgrades/sickle.tres" id="10_fpqho"]
-[ext_resource type="PackedScene" uid="uid://buuu07hownuol" path="res://scenes/game_objects/pig_enemy/pig_enemy.tscn" id="15_p7rkv"]
+[ext_resource type="Resource" uid="uid://cql2l11dmdgmm" path="res://resources/upgrades/sickle.tres" id="10_fpqho"]
 
 [node name="main" type="Node"]
 script = ExtResource("1_4axhp")
@@ -27,10 +26,11 @@ ArenaTimeManager = NodePath("../ArenaTimeManager")
 ExperienceMan = NodePath("../ExperienceManager")
 
 [node name="ArenaTimeManager" parent="." instance=ExtResource("2_dpjdg")]
+DifficultyInterval = 3
 
 [node name="EnemyManager" parent="." node_paths=PackedStringArray("ArenaTimeManager") instance=ExtResource("4_q4q4p")]
 ArenaTimeManager = NodePath("../ArenaTimeManager")
-SpawnRate = 1.5
+SpawnRate = 1.0
 
 [node name="ExperienceManager" parent="." instance=ExtResource("4_wkpd0")]
 
@@ -52,13 +52,5 @@ y_sort_enabled = true
 [node name="Player" parent="Entities" instance=ExtResource("1_csm0f")]
 unique_name_in_owner = true
 position = Vector2(226, 61)
-
-[node name="PigEnemy" parent="Entities" instance=ExtResource("15_p7rkv")]
-
-[node name="PigEnemy2" parent="Entities" instance=ExtResource("15_p7rkv")]
-position = Vector2(275, -71)
-
-[node name="PigEnemy3" parent="Entities" instance=ExtResource("15_p7rkv")]
-position = Vector2(82, 251)
 
 [node name="Foreground" type="Node2D" parent="." groups=["foreground_layer"]]
