@@ -6,5 +6,5 @@
 script = ExtResource("1_a028w")
 Id = "sword_rate"
 MaxQuantity = 5
-Name = "Sword Quickness"
-Description = "Increases sword attack rate by 10%"
+Name = "Rake Quickness"
+Description = "Increases rake attack rate by 10%"

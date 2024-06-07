@@ -56,12 +56,9 @@ position = Vector2(226, 61)
 [node name="PigEnemy" parent="Entities" instance=ExtResource("15_p7rkv")]
 
 [node name="PigEnemy2" parent="Entities" instance=ExtResource("15_p7rkv")]
-position = Vector2(302, -81)
+position = Vector2(275, -71)
 
 [node name="PigEnemy3" parent="Entities" instance=ExtResource("15_p7rkv")]
-position = Vector2(80, 74)
-
-[node name="PigEnemy4" parent="Entities" instance=ExtResource("15_p7rkv")]
-position = Vector2(125, -63)
+position = Vector2(82, 251)
 
 [node name="Foreground" type="Node2D" parent="." groups=["foreground_layer"]]

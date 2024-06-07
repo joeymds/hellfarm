@@ -41,7 +41,7 @@ namespace HellFarm.Code.Actors
 			
 			_isDead = false;
 			
-			_animationPlayer.Play("run");
+			//_animationPlayer.Play("run");
 			
 			UpdateHealthDisplay();
 		}

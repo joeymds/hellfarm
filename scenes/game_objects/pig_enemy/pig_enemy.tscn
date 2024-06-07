@@ -1,15 +1,16 @@
-[gd_scene load_steps=22 format=3 uid="uid://buuu07hownuol"]
+[gd_scene load_steps=24 format=3 uid="uid://buuu07hownuol"]
 
 [ext_resource type="Script" path="res://Code/Actors/PigEnemy.cs" id="1_daiwk"]
 [ext_resource type="PackedScene" uid="uid://dmjyiqtnytwof" path="res://scenes/components/health_component.tscn" id="1_hpsdp"]
 [ext_resource type="Texture2D" uid="uid://dftrw4ci8w1ym" path="res://scenes/game_objects/pig_enemy/pig-01.png" id="1_svmcw"]
 [ext_resource type="PackedScene" uid="uid://dldd4cbxgcxx" path="res://scenes/components/hurt_box_component.tscn" id="3_7c8wr"]
 [ext_resource type="PackedScene" uid="uid://cocy3ndnpi20h" path="res://scenes/components/death_component.tscn" id="3_skhrf"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_2ipaq"]
+[ext_resource type="PackedScene" uid="uid://dm7nv2u1lfywu" path="res://scenes/components/velocity_component.tscn" id="6_16tbk"]
+[ext_resource type="PackedScene" uid="uid://qvdf3n32yehj" path="res://scenes/components/vial_drop_component.tscn" id="7_dcscu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cpbwb"]
-radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2ipaq"]
 
 [sub_resource type="Animation" id="Animation_t5iqg"]
 length = 0.001
@@ -166,7 +167,7 @@ states/Chase/position = Vector2(453, 106)
 states/Start/position = Vector2(221, 102)
 transitions = ["Start", "Chase", SubResource("AnimationNodeStateMachineTransition_v8cfb")]
 
-[node name="PigEnemy" type="CharacterBody2D"]
+[node name="PigEnemy" type="CharacterBody2D" groups=["enemy"]]
 collision_layer = 8
 collision_mask = 9
 script = ExtResource("1_daiwk")
@@ -174,12 +175,16 @@ script = ExtResource("1_daiwk")
 [node name="HealthComponent" parent="." instance=ExtResource("1_hpsdp")]
 MaxHealth = 15.0
 
+[node name="VelocityComponent" parent="." instance=ExtResource("6_16tbk")]
+MaxSpeed = 60
+Acceleration = 2.0
+
 [node name="DeathComponent" parent="." node_paths=PackedStringArray("HealthComponent") instance=ExtResource("3_skhrf")]
 HealthComponent = NodePath("../HealthComponent")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -9)
-shape = SubResource("CircleShape2D_2ipaq")
+[node name="VialDropComponent" parent="." node_paths=PackedStringArray("HealthComp") instance=ExtResource("7_dcscu")]
+DropPercentage = 0.75
+HealthComp = NodePath("../HealthComponent")
 
 [node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("HealthComp") instance=ExtResource("3_7c8wr")]
 HealthComp = NodePath("../HealthComponent")
@@ -187,6 +192,10 @@ HealthComp = NodePath("../HealthComponent")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
 position = Vector2(0, -9)
 shape = SubResource("CircleShape2D_cpbwb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -9)
+shape = SubResource("CircleShape2D_2ipaq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -10)
