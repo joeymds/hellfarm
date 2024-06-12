@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bri1n4usf137c"]
+[gd_scene load_steps=25 format=3 uid="uid://bri1n4usf137c"]
 
 [ext_resource type="Script" path="res://Code/Actors/BasicEnemy.cs" id="1_io7df"]
 [ext_resource type="PackedScene" uid="uid://dmjyiqtnytwof" path="res://scenes/components/health_component.tscn" id="2_pnog4"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dldd4cbxgcxx" path="res://scenes/components/hurt_box_component.tscn" id="4_1wywg"]
 [ext_resource type="PackedScene" path="res://scenes/components/velocity_component.tscn" id="5_1d1fo"]
 [ext_resource type="Texture2D" uid="uid://n7n5qfsngbnv" path="res://scenes/game_objects/basic_enemy/Sheep-01.png" id="6_gsrod"]
+[ext_resource type="PackedScene" uid="uid://l0hhvhbspyrn" path="res://scenes/ui/floating_text.tscn" id="7_rt1dj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tp87h"]
 radius = 12.0
@@ -195,6 +196,7 @@ Acceleration = 6.0
 
 [node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("HealthComp") instance=ExtResource("4_1wywg")]
 HealthComp = NodePath("../HealthComponent")
+FloatingText = ExtResource("7_rt1dj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
 position = Vector2(0, -5)

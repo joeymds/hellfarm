@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://buuu07hownuol"]
+[gd_scene load_steps=25 format=3 uid="uid://buuu07hownuol"]
 
 [ext_resource type="Script" path="res://Code/Actors/PigEnemy.cs" id="1_daiwk"]
 [ext_resource type="PackedScene" uid="uid://dmjyiqtnytwof" path="res://scenes/components/health_component.tscn" id="1_hpsdp"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://scenes/components/death_component.tscn" id="3_skhrf"]
 [ext_resource type="PackedScene" path="res://scenes/components/velocity_component.tscn" id="6_16tbk"]
 [ext_resource type="PackedScene" uid="uid://qvdf3n32yehj" path="res://scenes/components/vial_drop_component.tscn" id="7_dcscu"]
+[ext_resource type="PackedScene" uid="uid://l0hhvhbspyrn" path="res://scenes/ui/floating_text.tscn" id="7_kljel"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cpbwb"]
 
@@ -188,6 +189,7 @@ HealthComp = NodePath("../HealthComponent")
 
 [node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("HealthComp") instance=ExtResource("3_7c8wr")]
 HealthComp = NodePath("../HealthComponent")
+FloatingText = ExtResource("7_kljel")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
 position = Vector2(0, -9)

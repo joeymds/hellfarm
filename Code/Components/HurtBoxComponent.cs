@@ -6,8 +6,7 @@ namespace HellFarm.Code.Components;
 public partial class HurtBoxComponent : Area2D
 {
     [Export] public HealthComponent HealthComp { get; set; }
-    
-    private FloatingText floatingText = GD.Load<FloatingText>("res://scenes/ui/floating_text.tscn");
+    [Export] public PackedScene FloatingText { get; set; }
 
     public override void _Ready()
     {
@@ -24,5 +23,11 @@ public partial class HurtBoxComponent : Area2D
         
         var hitBoxComponent = (HitBoxComponent) otherArea;
         HealthComp.Damage(hitBoxComponent.Damage);
+
+        var floatingText = (FloatingText)FloatingText.Instantiate();
+        GetTree().Root.AddChild(floatingText);
+        floatingText.GlobalPosition = GlobalPosition;
+        floatingText.Start(hitBoxComponent.Damage.ToString());
+        
     }
 }
