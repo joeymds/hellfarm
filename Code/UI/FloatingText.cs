@@ -8,6 +8,7 @@ public partial class FloatingText : Node2D
     
     public override void _Ready()
     {
+        
         _label = GetNode<Label>("Label");    
     }
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bri1n4usf137c"]
+[gd_scene load_steps=27 format=3 uid="uid://bri1n4usf137c"]
 
 [ext_resource type="Script" path="res://Code/Actors/BasicEnemy.cs" id="1_io7df"]
 [ext_resource type="PackedScene" uid="uid://dmjyiqtnytwof" path="res://scenes/components/health_component.tscn" id="2_pnog4"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://dldd4cbxgcxx" path="res://scenes/components/hurt_box_component.tscn" id="4_1wywg"]
 [ext_resource type="PackedScene" path="res://scenes/components/velocity_component.tscn" id="5_1d1fo"]
 [ext_resource type="Texture2D" uid="uid://n7n5qfsngbnv" path="res://scenes/game_objects/basic_enemy/Sheep-01.png" id="6_gsrod"]
+[ext_resource type="PackedScene" uid="uid://djirfo24n70g6" path="res://scenes/components/hit_flash_component.tscn" id="6_w2pti"]
+[ext_resource type="Material" uid="uid://b23gptdcyy1kf" path="res://scenes/components/hit_flash_component_material.tres" id="7_b577s"]
 [ext_resource type="PackedScene" uid="uid://l0hhvhbspyrn" path="res://scenes/ui/floating_text.tscn" id="7_rt1dj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tp87h"]
@@ -193,6 +195,11 @@ HealthComp = NodePath("../HealthComponent")
 [node name="VelocityComponent" parent="." instance=ExtResource("5_1d1fo")]
 MaxSpeed = 55
 Acceleration = 6.0
+
+[node name="HitFlashComponent" parent="." node_paths=PackedStringArray("HealthCmp", "Sprite") instance=ExtResource("6_w2pti")]
+HealthCmp = NodePath("../HealthComponent")
+Sprite = NodePath("../Sprite2D")
+HitFlashMaterial = ExtResource("7_b577s")
 
 [node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("HealthComp") instance=ExtResource("4_1wywg")]
 HealthComp = NodePath("../HealthComponent")
