@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://buuu07hownuol"]
+[gd_scene load_steps=28 format=3 uid="uid://buuu07hownuol"]
 
 [ext_resource type="Script" path="res://Code/Actors/PigEnemy.cs" id="1_daiwk"]
 [ext_resource type="PackedScene" uid="uid://dmjyiqtnytwof" path="res://scenes/components/health_component.tscn" id="1_hpsdp"]
@@ -6,8 +6,15 @@
 [ext_resource type="PackedScene" uid="uid://dldd4cbxgcxx" path="res://scenes/components/hurt_box_component.tscn" id="3_7c8wr"]
 [ext_resource type="PackedScene" path="res://scenes/components/death_component.tscn" id="3_skhrf"]
 [ext_resource type="PackedScene" path="res://scenes/components/velocity_component.tscn" id="6_16tbk"]
+[ext_resource type="PackedScene" uid="uid://djirfo24n70g6" path="res://scenes/components/hit_flash_component.tscn" id="6_u0a1m"]
+[ext_resource type="Shader" path="res://scenes/components/hit_flash_component.gdshader" id="7_4aeuw"]
 [ext_resource type="PackedScene" uid="uid://qvdf3n32yehj" path="res://scenes/components/vial_drop_component.tscn" id="7_dcscu"]
 [ext_resource type="PackedScene" uid="uid://l0hhvhbspyrn" path="res://scenes/ui/floating_text.tscn" id="7_kljel"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oeo2v"]
+resource_local_to_scene = true
+shader = ExtResource("7_4aeuw")
+shader_parameter/lerp_percent = 0.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cpbwb"]
 
@@ -177,7 +184,7 @@ script = ExtResource("1_daiwk")
 MaxHealth = 15.0
 
 [node name="VelocityComponent" parent="." instance=ExtResource("6_16tbk")]
-MaxSpeed = 60
+MaxSpeed = 50
 Acceleration = 8.0
 
 [node name="DeathComponent" parent="." node_paths=PackedStringArray("HealthComponent") instance=ExtResource("3_skhrf")]
@@ -186,6 +193,11 @@ HealthComponent = NodePath("../HealthComponent")
 [node name="VialDropComponent" parent="." node_paths=PackedStringArray("HealthComp") instance=ExtResource("7_dcscu")]
 DropPercentage = 0.75
 HealthComp = NodePath("../HealthComponent")
+
+[node name="HitFlashComponent" parent="." node_paths=PackedStringArray("HealthCmp", "Sprite") instance=ExtResource("6_u0a1m")]
+HealthCmp = NodePath("../HealthComponent")
+Sprite = NodePath("../Sprite2D")
+HitFlashMaterial = SubResource("ShaderMaterial_oeo2v")
 
 [node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("HealthComp") instance=ExtResource("3_7c8wr")]
 HealthComp = NodePath("../HealthComponent")
