@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://7fxfv6ptpn5f"]
+
+[ext_resource type="Script" path="res://Code/Upgrades/AbilityUpgrade.cs" id="1_bg14g"]
+
+[resource]
+script = ExtResource("1_bg14g")
+Id = "rake_damage"
+MaxQuantity = 0
+Name = "Rake Damage"
+Description = "Increases Rake damage by 15%"

@@ -7,7 +7,7 @@ namespace HellFarm.Code.Events;
 
 public partial class GameEvents : Node
 {
-    private List<Upgrade> _currentUpgrades;
+    /*private List<Upgrade> _currentUpgrades;
     
     public List<Upgrade> CurrentUpgrades
     {
@@ -21,7 +21,7 @@ public partial class GameEvents : Node
             return _currentUpgrades;
         }
         set => _currentUpgrades = value;
-    }
+    }*/
 
     [Signal]
     public delegate void ExperienceVialCollectedEventHandler(int number);

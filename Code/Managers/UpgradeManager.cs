@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using HellFarm.Code.Events;
@@ -12,11 +13,14 @@ public partial class UpgradeManager : Node
     [Export] public AbilityUpgrade[] UpgradePool { get; set; }
     [Export] public PackedScene UpgradeScreenScene { get; set; }
     
+    private GameState _gameState;
     private GameEvents _gameEvents;
     
     public override void _Ready()
     {
+        _gameState = GetNode<GameState>("/root/GameState");
         _gameEvents = GetNode<GameEvents>("/root/GameEvents");
+        
         ExperienceMgr.LevelUp += OnLevelUp;    
     }
 
@@ -27,9 +31,9 @@ public partial class UpgradeManager : Node
 
     private void ApplyUpgrade(AbilityUpgrade upgrade)
     { 
-        if (_gameEvents.CurrentUpgrades.Count > 0)
+        if (_gameState.PlayerUpgrades.Count > 0)
         {
-            var hasUpgrade = _gameEvents.CurrentUpgrades.Find(u => u.Id == upgrade.Id);
+            var hasUpgrade = _gameState.PlayerUpgrades.Find(u => u.Id == upgrade.Id);
             if (hasUpgrade == null)
             {
                 InsertUpgrade(upgrade);
@@ -46,7 +50,7 @@ public partial class UpgradeManager : Node
 
         if (upgrade.MaxQuantity > 0)
         {
-            var currentQuantity = _gameEvents.CurrentUpgrades.Find(u => u.Id == upgrade.Id).Quantity;
+            var currentQuantity = _gameState.PlayerUpgrades.Find(u => u.Id == upgrade.Id).Quantity;
             if (currentQuantity == upgrade.MaxQuantity)
             {
                 UpgradePool = UpgradePool.Where(u => u.Id != upgrade.Id).ToArray();
@@ -58,21 +62,38 @@ public partial class UpgradeManager : Node
 
     private AbilityUpgrade[] PickUpgrade()
     {
-        //var chosenUpgrades = new AbilityUpgrade[2];
-        var chosenUpgrades = new AbilityUpgrade[UpgradePool.Length];
-        var filteredUpgrades = (AbilityUpgrade[])UpgradePool.Clone();
+        // We only want to present the player with 2 upgrades
+        var chosenUpgrades = new AbilityUpgrade[2];
+        var filteredUpgrades = new List<AbilityUpgrade>();
+        
+        // filter out any upgrades that require an existing upgrade
+        foreach (var item in UpgradePool)
+        {
+            if (string.IsNullOrEmpty(item.Requires))
+            {
+                filteredUpgrades.Add(item);
+            }
+            else
+            {
+                var existingItem = _gameState.PlayerUpgrades.FirstOrDefault(pu => pu.Id == item.Requires);
+                if (existingItem != null)
+                {
+                    filteredUpgrades.Add(item);
+                }
+            }
+        }
         
         for (var i = 0; i < 2; i++)
         {
-            if (filteredUpgrades.Length == 0)
+            if (filteredUpgrades.Count == 0)
                 break;
             
-            var chosenUpgrade = filteredUpgrades[GD.RandRange(0, filteredUpgrades.Length - 1)];
+            var chosenUpgrade = filteredUpgrades[GD.RandRange(0, filteredUpgrades.Count - 1)];
             if (chosenUpgrade == null)
                 break;
             
             chosenUpgrades[i] = chosenUpgrade;
-            filteredUpgrades = filteredUpgrades.Where(u => u.Id != chosenUpgrade.Id).ToArray();
+            filteredUpgrades = filteredUpgrades.Where(f => f.Id != chosenUpgrade.Id).ToList();
         }
 
         return chosenUpgrades;
@@ -80,7 +101,7 @@ public partial class UpgradeManager : Node
 
     private void InsertUpgrade(AbilityUpgrade upgrade)
     {
-        _gameEvents.CurrentUpgrades.Add(new Upgrade
+        _gameState.PlayerUpgrades.Add(new Upgrade
         {
             Id = upgrade.Id,
             Quantity = 1,

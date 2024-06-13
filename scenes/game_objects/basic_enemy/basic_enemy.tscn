@@ -3,18 +3,18 @@
 [ext_resource type="Script" path="res://Code/Actors/BasicEnemy.cs" id="1_io7df"]
 [ext_resource type="PackedScene" uid="uid://dmjyiqtnytwof" path="res://scenes/components/health_component.tscn" id="2_pnog4"]
 [ext_resource type="PackedScene" uid="uid://qvdf3n32yehj" path="res://scenes/components/vial_drop_component.tscn" id="3_jl53g"]
-[ext_resource type="PackedScene" path="res://scenes/components/death_component.tscn" id="3_wxwfd"]
+[ext_resource type="PackedScene" uid="uid://cocy3ndnpi20h" path="res://scenes/components/death_component.tscn" id="3_wxwfd"]
 [ext_resource type="PackedScene" uid="uid://dldd4cbxgcxx" path="res://scenes/components/hurt_box_component.tscn" id="4_1wywg"]
-[ext_resource type="PackedScene" path="res://scenes/components/velocity_component.tscn" id="5_1d1fo"]
+[ext_resource type="PackedScene" uid="uid://dm7nv2u1lfywu" path="res://scenes/components/velocity_component.tscn" id="5_1d1fo"]
 [ext_resource type="Texture2D" uid="uid://n7n5qfsngbnv" path="res://scenes/game_objects/basic_enemy/Sheep-01.png" id="6_gsrod"]
 [ext_resource type="PackedScene" uid="uid://djirfo24n70g6" path="res://scenes/components/hit_flash_component.tscn" id="6_w2pti"]
 [ext_resource type="Shader" path="res://scenes/components/hit_flash_component.gdshader" id="7_q56f4"]
 [ext_resource type="PackedScene" uid="uid://l0hhvhbspyrn" path="res://scenes/ui/floating_text.tscn" id="7_rt1dj"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_frj4p"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y1smw"]
 resource_local_to_scene = true
 shader = ExtResource("7_q56f4")
-shader_parameter/lerp_percent = 0.0
+shader_parameter/lerp_percent = 0.25
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tp87h"]
 radius = 12.0
@@ -204,7 +204,7 @@ Acceleration = 6.0
 [node name="HitFlashComponent" parent="." node_paths=PackedStringArray("HealthCmp", "Sprite") instance=ExtResource("6_w2pti")]
 HealthCmp = NodePath("../HealthComponent")
 Sprite = NodePath("../Sprite2D")
-HitFlashMaterial = SubResource("ShaderMaterial_frj4p")
+HitFlashMaterial = SubResource("ShaderMaterial_y1smw")
 
 [node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("HealthComp") instance=ExtResource("4_1wywg")]
 HealthComp = NodePath("../HealthComponent")
@@ -230,9 +230,6 @@ libraries = {
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_2ekyl")
-}
 tree_root = SubResource("AnimationNodeStateMachine_0fhcc")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Chase/blend_position = Vector2(0.00173914, 0.00947869)

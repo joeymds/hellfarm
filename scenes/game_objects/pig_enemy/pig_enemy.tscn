@@ -4,8 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://dmjyiqtnytwof" path="res://scenes/components/health_component.tscn" id="1_hpsdp"]
 [ext_resource type="Texture2D" uid="uid://dftrw4ci8w1ym" path="res://scenes/game_objects/pig_enemy/pig-01.png" id="1_svmcw"]
 [ext_resource type="PackedScene" uid="uid://dldd4cbxgcxx" path="res://scenes/components/hurt_box_component.tscn" id="3_7c8wr"]
-[ext_resource type="PackedScene" path="res://scenes/components/death_component.tscn" id="3_skhrf"]
-[ext_resource type="PackedScene" path="res://scenes/components/velocity_component.tscn" id="6_16tbk"]
+[ext_resource type="PackedScene" uid="uid://cocy3ndnpi20h" path="res://scenes/components/death_component.tscn" id="3_skhrf"]
+[ext_resource type="PackedScene" uid="uid://dm7nv2u1lfywu" path="res://scenes/components/velocity_component.tscn" id="6_16tbk"]
 [ext_resource type="PackedScene" uid="uid://djirfo24n70g6" path="res://scenes/components/hit_flash_component.tscn" id="6_u0a1m"]
 [ext_resource type="Shader" path="res://scenes/components/hit_flash_component.gdshader" id="7_4aeuw"]
 [ext_resource type="PackedScene" uid="uid://qvdf3n32yehj" path="res://scenes/components/vial_drop_component.tscn" id="7_dcscu"]
@@ -223,9 +223,6 @@ libraries = {
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_yrfl3")
-}
 tree_root = SubResource("AnimationNodeStateMachine_lruja")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Chase/blend_position = Vector2(0.00120342, -0.981043)

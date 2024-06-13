@@ -1,4 +1,5 @@
 using Godot;
+using HellFarm.Code.Events;
 using HellFarm.Code.Upgrades;
 
 namespace HellFarm.Code.UI;
@@ -9,11 +10,13 @@ public partial class UpgradeScreen : CanvasLayer
     
     [Signal] public delegate void UpgradeSelectedEventHandler(AbilityUpgrade upgrade);
 
-    
+
+    private GameState _gameState;
     private HBoxContainer _cardContainer;
     
     public override void _Ready()
     {
+        _gameState = GetNode<GameState>("/root/GameState");
         _cardContainer = GetNode<HBoxContainer>("MarginContainer/CardContainer");
         GetTree().Paused = true;
     }

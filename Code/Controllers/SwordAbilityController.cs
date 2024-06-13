@@ -12,13 +12,16 @@ public partial class SwordAbilityController : Node
 	[Export] public float MaxRange { get; set; }
 	[Export] public float Damage { get; set; } = 5;
 	
+	private GameState _gameState;
 	private GameEvents _gameEvents;
+	
 	private Timer _timer;
 
 	private double baseWaitTime;
 	
 	public override void _Ready()
 	{
+		_gameState = GetNode<GameState>("/root/GameState");
 		_gameEvents = GetNode<GameEvents>("/root/GameEvents");
 		_gameEvents.AbilityUpgradeAdded += OnAbilityUpgradeAdded;
 		
@@ -33,7 +36,7 @@ public partial class SwordAbilityController : Node
 		if (upgrade.Id != "sword_rate")
 			return;
 
-		var percentReduction = _gameEvents.CurrentUpgrades
+		var percentReduction = _gameState.PlayerUpgrades
 			.Where(x => x.Id == "sword_rate")
 			.Sum(x => x.Quantity * .1);
 		

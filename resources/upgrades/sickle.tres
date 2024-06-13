@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cql2l11dmdgmm"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://dyek22jnwkh5o"]
 
 [ext_resource type="PackedScene" uid="uid://cebl3k2sykcjg" path="res://scenes/ability/sickle_ability_controller/sickle_ability_controller.tscn" id="1_ckd2b"]
 [ext_resource type="Script" path="res://Code/Upgrades/Ability.cs" id="2_ro6fb"]
@@ -9,4 +9,5 @@ AbilityControllerScene = ExtResource("1_ckd2b")
 Id = "sickle"
 MaxQuantity = 1
 Name = "Large Sickle"
+Requires = ""
 Description = "Periodically sends out a spinning sickle."

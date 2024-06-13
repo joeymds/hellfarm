@@ -4,4 +4,4 @@
 
 [node name="UpgradeManager" type="Node"]
 script = ExtResource("1_ibce2")
-UpgradePool = Array[Resource]([null, null])
+UpgradePool = Array[Resource]([null, null, null, null])

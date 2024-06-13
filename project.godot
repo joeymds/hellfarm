@@ -17,6 +17,7 @@ config/icon="res://scenes/ui/icon_01.png"
 
 [autoload]
 
+GameState="*res://Code/Events/GameState.cs"
 GameEvents="*res://auto_load/game_events.tscn"
 
 [display]
