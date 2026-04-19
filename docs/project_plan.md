@@ -225,35 +225,37 @@ Suggested files:
 - `Code/Managers/ExperienceManager.cs`
 - `Code/UI/ExperienceBar.cs`
 
-## Milestone 3: Combat And Spawn Tuning
+## Milestone 3: Enemy Content Expansion
 
-Goal: Make the arena survival loop more readable, fair, and replayable.
+Goal: Add enemy variety before tuning spawn rates and progression.
 
-### Story 3.1: Tune Enemy Spawn Progression
+### Story 3.1: Add Chicken Enemy
 
-As a player, enemy pressure should ramp up clearly over the run.
+As a player, I should face a fast but fragile enemy that changes how I move and prioritize threats.
 
 Scope:
 
-- Review the current 5-minute arena timing.
-- Tune spawn rate changes across difficulty levels.
-- Confirm when pig enemies enter the spawn table.
-- Consider a maximum active enemy count to prevent runaway density.
+- Create a chicken enemy scene using `scenes/game_objects/chicken_enemy/chicken-sheet.png`.
+- Add a chicken enemy script or reuse the existing enemy script if the component exports are enough.
+- Tune chickens to have very low health, faster movement, and a faster attack cadence than sheep and pigs.
+- Add chickens to the spawn progression so they appear earlier and/or more frequently than heavier enemies.
+- Make chickens visually distinct and readable at gameplay scale.
 
 Acceptance criteria:
 
-- Early game gives the player time to learn.
-- Mid-game increases pressure.
-- Late game feels intense but playable.
-- Spawn rate never becomes negative or unreasonably low.
+- Chickens spawn during a run from the enemy manager.
+- Chickens move faster than existing sheep and pig enemies.
+- Chickens attack or damage the player faster than existing enemies.
+- Chickens have noticeably lower HP than existing enemies.
+- Chicken art animates or displays correctly from `chicken-sheet.png`.
 - `dotnet build HellFarm.csproj` succeeds.
 
 Suggested files:
 
+- `Code/Actors/ChickenEnemy.cs` (or reuse BasicEnemy pattern)
 - `Code/Managers/EnemyManager.cs`
-- `Code/Managers/ArenaTimeManager.cs`
 - `scenes/manager/enemy_manager.tscn`
-- `scenes/manager/arena_time_manager.tscn`
+- `scenes/game_objects/chicken_enemy/chicken_enemy.tscn`
 
 ### Story 3.2: Add Enemy Wave Variety
 
@@ -278,35 +280,38 @@ Suggested files:
 - `Code/Managers/EnemyManager.cs`
 - `scenes/game_objects/`
 
-### Story 3.3: Add Chicken Enemy
+## Milestone 4: Combat And Spawn Tuning
 
-As a player, I should face a fast but fragile enemy that changes how I move and prioritize threats.
+Goal: Make the arena survival loop more readable, fair, and replayable. Now that enemy variety exists, tune the spawn progression and add metrics for ongoing balance.
+
+### Story 4.1: Tune Enemy Spawn Progression
+
+As a player, enemy pressure should ramp up clearly over the run.
 
 Scope:
 
-- Create a chicken enemy scene using `scenes/game_objects/chicken_enemy/chicken-sheet.png`.
-- Add a chicken enemy script or reuse the existing enemy script if the component exports are enough.
-- Tune chickens to have very low health, faster movement, and a faster attack cadence than sheep and pigs.
-- Add chickens to the spawn progression so they appear earlier and/or more frequently than heavier enemies.
-- Make chickens visually distinct and readable at gameplay scale.
+- Review the current 5-minute arena timing.
+- Tune spawn rate changes across difficulty levels.
+- Balance when sheep, pigs, and chickens enter the spawn table.
+- Consider a maximum active enemy count to prevent runaway density.
 
 Acceptance criteria:
 
-- Chickens spawn during a run from the enemy manager.
-- Chickens move faster than existing sheep and pig enemies.
-- Chickens attack or damage the player faster than existing enemies.
-- Chickens have noticeably lower HP than existing enemies.
-- Chicken art animates or displays correctly from `chicken-sheet.png`.
+- Early game gives the player time to learn.
+- Mid-game increases pressure with varied enemy types.
+- Late game feels intense but playable.
+- Spawn rate never becomes negative or unreasonably low.
+- All three enemy types appear at appropriate times.
 - `dotnet build HellFarm.csproj` succeeds.
 
 Suggested files:
 
-- `Code/Actors/`
 - `Code/Managers/EnemyManager.cs`
+- `Code/Managers/ArenaTimeManager.cs`
 - `scenes/manager/enemy_manager.tscn`
-- `scenes/game_objects/chicken_enemy/`
+- `scenes/manager/arena_time_manager.tscn`
 
-### Story 3.4: Add Basic Combat Telemetry For Tuning
+### Story 4.2: Add Basic Combat Telemetry For Tuning
 
 As a developer, I need simple run metrics to tune the game.
 
@@ -330,7 +335,7 @@ Suggested files:
 - `Code/UI/EndScreen.cs`
 - `Code/Managers/ArenaTimeManager.cs`
 
-## Milestone 4: Player-Facing UX
+## Milestone 5: Player-Facing UX
 
 Goal: Make the game more understandable and more polished without changing the core loop.
 
@@ -405,11 +410,11 @@ Suggested files:
 - `Code/UI/`
 - `scenes/ui/`
 
-## Milestone 5: Content Expansion
+## Milestone 6: Upgrade And Weapon Expansion
 
 Goal: Add enough decisions and variety to support repeated play.
 
-### Story 5.1: Add More Upgrade Types
+### Story 6.1: Add More Upgrade Types
 
 As a player, I want level-up choices that support different builds.
 
@@ -434,7 +439,7 @@ Suggested files:
 - `Code/Components/`
 - `Code/Managers/UpgradeManager.cs`
 
-### Story 5.2: Add Another Weapon
+### Story 6.2: Add Another Weapon
 
 As a player, I want at least one more unlockable weapon path.
 
@@ -459,11 +464,11 @@ Suggested files:
 - `resources/upgrades/`
 - `scenes/ability/`
 
-## Milestone 6: Repository Hygiene And Project Maintenance
+## Milestone 7: Repository Hygiene And Project Maintenance
 
 Goal: Make the repository clean, intentional, and easier to continue.
 
-### Story 6.1: Resolve Godot 4.6 Migration State
+### Story 7.1: Resolve Godot 4.6 Migration State
 
 As a developer, I need the project version and generated files to be intentional.
 
@@ -487,7 +492,7 @@ Suggested files:
 - `*.import`
 - `*.uid`
 
-### Story 6.2: Remove Or Ignore Backup Project Files
+### Story 7.2: Remove Or Ignore Backup Project Files
 
 As a developer, I do not want stale backup files cluttering the repository.
 

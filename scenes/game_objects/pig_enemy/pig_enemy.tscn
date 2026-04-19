@@ -1,17 +1,17 @@
-[gd_scene load_steps=28 format=3 uid="uid://buuu07hownuol"]
+[gd_scene format=3 uid="uid://buuu07hownuol"]
 
-[ext_resource type="Script" path="res://Code/Actors/PigEnemy.cs" id="1_daiwk"]
+[ext_resource type="Script" uid="uid://dx2ljdivgmdw" path="res://Code/Actors/PigEnemy.cs" id="1_daiwk"]
 [ext_resource type="PackedScene" uid="uid://dmjyiqtnytwof" path="res://scenes/components/health_component.tscn" id="1_hpsdp"]
 [ext_resource type="Texture2D" uid="uid://dftrw4ci8w1ym" path="res://scenes/game_objects/pig_enemy/pig-01.png" id="1_svmcw"]
 [ext_resource type="PackedScene" uid="uid://dldd4cbxgcxx" path="res://scenes/components/hurt_box_component.tscn" id="3_7c8wr"]
 [ext_resource type="PackedScene" uid="uid://cocy3ndnpi20h" path="res://scenes/components/death_component.tscn" id="3_skhrf"]
 [ext_resource type="PackedScene" uid="uid://dm7nv2u1lfywu" path="res://scenes/components/velocity_component.tscn" id="6_16tbk"]
 [ext_resource type="PackedScene" uid="uid://djirfo24n70g6" path="res://scenes/components/hit_flash_component.tscn" id="6_u0a1m"]
-[ext_resource type="Shader" path="res://scenes/components/hit_flash_component.gdshader" id="7_4aeuw"]
+[ext_resource type="Shader" uid="uid://kuxdp6i2lknd" path="res://scenes/components/hit_flash_component.gdshader" id="7_4aeuw"]
 [ext_resource type="PackedScene" uid="uid://qvdf3n32yehj" path="res://scenes/components/vial_drop_component.tscn" id="7_dcscu"]
 [ext_resource type="PackedScene" uid="uid://l0hhvhbspyrn" path="res://scenes/ui/floating_text.tscn" id="7_kljel"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_oeo2v"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a0vaw"]
 resource_local_to_scene = true
 shader = ExtResource("7_4aeuw")
 shader_parameter/lerp_percent = 0.0
@@ -135,12 +135,12 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yrfl3"]
 _data = {
-"RESET": SubResource("Animation_t5iqg"),
-"death": SubResource("Animation_sy2m6"),
-"down": SubResource("Animation_vayye"),
-"left": SubResource("Animation_i7pfk"),
-"right": SubResource("Animation_52e07"),
-"up": SubResource("Animation_ey0rt")
+&"RESET": SubResource("Animation_t5iqg"),
+&"death": SubResource("Animation_sy2m6"),
+&"down": SubResource("Animation_vayye"),
+&"left": SubResource("Animation_i7pfk"),
+&"right": SubResource("Animation_52e07"),
+&"up": SubResource("Animation_ey0rt")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4bq1c"]
@@ -175,54 +175,52 @@ states/Chase/position = Vector2(453, 106)
 states/Start/position = Vector2(221, 102)
 transitions = ["Start", "Chase", SubResource("AnimationNodeStateMachineTransition_v8cfb")]
 
-[node name="PigEnemy" type="CharacterBody2D" groups=["enemy"]]
+[node name="PigEnemy" type="CharacterBody2D" unique_id=913295799 groups=["enemy"]]
 collision_layer = 8
 collision_mask = 9
 script = ExtResource("1_daiwk")
 
-[node name="HealthComponent" parent="." instance=ExtResource("1_hpsdp")]
+[node name="HealthComponent" parent="." unique_id=386225381 instance=ExtResource("1_hpsdp")]
 MaxHealth = 15.0
 
-[node name="VelocityComponent" parent="." instance=ExtResource("6_16tbk")]
+[node name="VelocityComponent" parent="." unique_id=1466514434 instance=ExtResource("6_16tbk")]
 MaxSpeed = 50
 Acceleration = 8.0
 
-[node name="DeathComponent" parent="." node_paths=PackedStringArray("HealthComponent") instance=ExtResource("3_skhrf")]
+[node name="DeathComponent" parent="." unique_id=626497071 node_paths=PackedStringArray("HealthComponent") instance=ExtResource("3_skhrf")]
 HealthComponent = NodePath("../HealthComponent")
 
-[node name="VialDropComponent" parent="." node_paths=PackedStringArray("HealthComp") instance=ExtResource("7_dcscu")]
+[node name="VialDropComponent" parent="." unique_id=1342852621 node_paths=PackedStringArray("HealthComp") instance=ExtResource("7_dcscu")]
 DropPercentage = 0.75
 HealthComp = NodePath("../HealthComponent")
 
-[node name="HitFlashComponent" parent="." node_paths=PackedStringArray("HealthCmp", "Sprite") instance=ExtResource("6_u0a1m")]
+[node name="HitFlashComponent" parent="." unique_id=1394908716 node_paths=PackedStringArray("HealthCmp", "Sprite") instance=ExtResource("6_u0a1m")]
 HealthCmp = NodePath("../HealthComponent")
 Sprite = NodePath("../Sprite2D")
-HitFlashMaterial = SubResource("ShaderMaterial_oeo2v")
+HitFlashMaterial = SubResource("ShaderMaterial_a0vaw")
 
-[node name="HurtBoxComponent" parent="." node_paths=PackedStringArray("HealthComp") instance=ExtResource("3_7c8wr")]
+[node name="HurtBoxComponent" parent="." unique_id=709902912 node_paths=PackedStringArray("HealthComp") instance=ExtResource("3_7c8wr")]
 HealthComp = NodePath("../HealthComponent")
 FloatingText = ExtResource("7_kljel")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent" unique_id=635060844]
 position = Vector2(0, -9)
 shape = SubResource("CircleShape2D_cpbwb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=292527926]
 position = Vector2(0, -9)
 shape = SubResource("CircleShape2D_2ipaq")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1384094804]
 position = Vector2(0, -10)
 texture = ExtResource("1_svmcw")
 hframes = 4
 vframes = 4
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_yrfl3")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=348517222]
+libraries/ = SubResource("AnimationLibrary_yrfl3")
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1753239318]
 tree_root = SubResource("AnimationNodeStateMachine_lruja")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Chase/blend_position = Vector2(0.00120342, -0.981043)

@@ -10,6 +10,7 @@ public partial class EnemyManager : Node
 	
 	[Export] public PackedScene BasicEnemyScene { get; set; }
 	[Export] public PackedScene PigEnemyScene { get; set; }
+	[Export] public PackedScene ChickenEnemyScene { get; set; }
 	[Export] public ArenaTimeManager ArenaTimeManager { get; set; }
 	[Export] public float SpawnRate { get; set; } = 1.0f;
 	
@@ -22,6 +23,7 @@ public partial class EnemyManager : Node
 	{
 		_enemyTable = new WeightedTable();
 		_enemyTable.AddItem(new EnemyItem{ Weight = 10, EnemyScene = BasicEnemyScene });
+		_enemyTable.AddItem(new EnemyItem { Weight = 15, EnemyScene = ChickenEnemyScene });
 		
 		_timer = GetNode<Timer>("Timer");
 		_timer.WaitTime = SpawnRate;
@@ -79,6 +81,11 @@ public partial class EnemyManager : Node
 		timeOff = Mathf.Min(timeOff, 0.7);
 		
 		_timer.WaitTime = _baseSpawnTime - timeOff;
+
+		if (arenaDifficulty == 4)
+		{
+			_enemyTable.AddItem(new EnemyItem { Weight = 15, EnemyScene = ChickenEnemyScene });
+		}
 
 		if (arenaDifficulty == 6)
 		{
