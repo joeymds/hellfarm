@@ -47,3 +47,35 @@
 - ✅ Build succeeds with no new errors
 
 **Build Status:** ✅ Success
+
+### ✅ Story 1.3: Make Upgrade Choice Generation Null-Safe (Completed: 19 April 2026)
+
+**Goal:** Prevent null reference exceptions in upgrade card display and handle edge cases where 0, 1, or 2+ upgrades are available.
+
+**Changes:**
+- Modified [Code/Managers/UpgradeManager.cs](Code/Managers/UpgradeManager.cs)
+  - Changed `PickUpgrade()` return type from `AbilityUpgrade[]` to `List<AbilityUpgrade>`
+  - Returns only valid upgrades (0, 1, or 2) without null values
+  - Preserved existing requirement filtering logic
+  - Removed unused random selection code (`chosenUpgrade` variable and null check)
+  - Added zero-upgrade handling in `OnLevelUp()` - logs and returns early without crashing
+  - Added null guard in filtering to prevent invalid entries
+  
+- Modified [Code/UI/UpgradeScreen.cs](Code/UI/UpgradeScreen.cs)
+  - Changed `SetAbilityUpgrades()` parameter type to `List<AbilityUpgrade>`
+  - Handles null/empty input safely
+  - Creates cards dynamically for each valid upgrade (supports 1, 2, or more)
+  
+- Modified [Code/UI/AbilityUpgradeCard.cs](Code/UI/AbilityUpgradeCard.cs)
+  - Added defensive null check in `SetAbilityUpgrade()`: `if (upgrade == null) return;`
+  - Prevents any possible null access to upgrade properties
+
+**Acceptance Criteria Verified:**
+- ✅ Two or more valid upgrades show two cards
+- ✅ One valid upgrade shows one card (no broken empty card)
+- ✅ Zero valid upgrades resumes game without crash or empty screen
+- ✅ No null reference exceptions occur in AbilityUpgradeCard.SetAbilityUpgrade
+- ✅ Build succeeds with no new errors
+- ✅ Requirement filtering still works correctly
+
+**Build Status:** ✅ Success

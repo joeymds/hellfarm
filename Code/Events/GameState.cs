@@ -21,4 +21,10 @@ public partial class GameState: Node
         }
         set => _playerUpgrades = value;
     }
+
+    public void ResetRunState()
+    {
+        _playerUpgrades = new List<Upgrade>();
+        GD.Print("GameState reset run state.");
+    }
 }

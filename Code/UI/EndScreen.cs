@@ -1,4 +1,5 @@
 using Godot;
+using HellFarm.Code.Events;
 
 namespace HellFarm.Code.UI;
 
@@ -36,6 +37,9 @@ public partial class EndScreen : Node
 
 	private void OnRestartButtonPressed()
 	{
+		var gameState = GetNode<GameState>("/root/GameState");
+		gameState.ResetRunState();
+
 		GetTree().Paused = false;
 		GetTree().ChangeSceneToFile("res://scenes/main/main.tscn");
 	}
