@@ -51,8 +51,6 @@ public partial class SwordAbilityController : Node
 			
 			_timer.WaitTime = newWaitTime;
 			_timer.Start();
-			
-			GD.Print($"Timer WaitTime: {_timer.WaitTime}");
 		}
 
 		if (upgrade.Id == "rake_damage")
@@ -62,7 +60,6 @@ public partial class SwordAbilityController : Node
 				.Sum(x => x.Quantity * 0.15);
 
 			Damage = (float)(baseDamage * (1 + damageIncrease));
-			GD.Print($"Sword Damage: {Damage}");
 		}
 	}
 

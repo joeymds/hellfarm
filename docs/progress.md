@@ -79,3 +79,43 @@
 - ✅ Requirement filtering still works correctly
 
 **Build Status:** ✅ Success
+
+### ✅ Story 1.4: Reset Run State On Restart (Completed: 19 April 2026)
+
+**Goal:** Clear all run state when restart is pressed, ensuring players start fresh with only the default rake ability.
+
+**Changes:**
+- Modified [Code/Events/GameState.cs](Code/Events/GameState.cs)
+  - Added public `ResetRunState()` method that clears PlayerUpgrades
+  - Sets PlayerUpgrades to a new empty list
+  - Added debug logging when reset is called
+  - Idempotent and safe to call multiple times
+  
+- Modified [Code/UI/EndScreen.cs](Code/UI/EndScreen.cs)
+  - Added GameState autoload reference
+  - Updated `OnRestartButtonPressed()` to call `ResetRunState()` before scene transition
+  - Execution order: reset state → unpause tree → change scene
+  
+- Fixed [scenes/manager/upgrade_manager.tscn](scenes/manager/upgrade_manager.tscn)
+  - **Bug discovered:** UpgradePool was configured with `[null, null, null, null]`
+  - Updated to properly reference all 4 upgrade resources:
+    - rake_damage.tres (Rake Damage - 15% damage increase)
+    - sword_rate.tres (Rake Quickness - attack speed increase)
+    - sickle.tres (Sickle - unlocks sickle ability)
+    - sickle_damage.tres (Sickle Damage - 10% damage increase, requires sickle)
+
+**Verification Findings:**
+- ✅ Player doesn't re-apply existing upgrades on initialization
+- ✅ SwordAbilityController uses base values when PlayerUpgrades is empty
+- ✅ SickleAbilityController uses base damage when PlayerUpgrades is empty
+- ✅ All upgrades now appear in level-up screen
+
+**Acceptance Criteria Verified:**
+- ✅ After restart, PlayerUpgrades is empty at start of new run
+- ✅ Player starts with only default rake ability
+- ✅ Sickle is not present unless selected in current run
+- ✅ All damage values return to base amounts after restart
+- ✅ Multiple restarts work consistently
+- ✅ Build succeeds with no new errors
+
+**Build Status:** ✅ Success

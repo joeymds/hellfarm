@@ -36,8 +36,6 @@ public partial class ExperienceManager : Node
 		CurrentExperience += amount;
 		
 		EmitSignal("ExperienceUpdated", CurrentExperience, TargetExperience);
-
-		GD.Print($"{CurrentExperience}/{TargetExperience}");
 		
 		if (CurrentExperience >= TargetExperience)
 		{

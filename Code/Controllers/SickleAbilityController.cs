@@ -41,7 +41,6 @@ public partial class SickleAbilityController : Node
             .Sum(x => x.Quantity * 0.10);
 
         Damage = (float)(baseDamage * (1 + damageIncrease));
-        GD.Print($"Sickle Damage: {Damage}");
     }
 
     private void OnTimerTimeout()

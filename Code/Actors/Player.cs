@@ -72,7 +72,6 @@ namespace HellFarm.Code.Actors
 			
 			HealthComponent.Damage(1);
 			_damageIntervalTimer.Start();
-			GD.Print(HealthComponent.CurrentHealth);
 		}
 
 		private void UpdateHealthDisplay()
