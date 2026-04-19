@@ -119,3 +119,49 @@
 - ✅ Build succeeds with no new errors
 
 **Build Status:** ✅ Success
+
+### ✅ Story 1.5: Remove Gameplay Debug Output (Completed: 19 April 2026)
+
+**Goal:** Clean up console output during normal gameplay by removing debug print spam.
+
+**Changes:**
+- Modified [Code/Actors/Player.cs](Code/Actors/Player.cs)
+  - Removed health damage print from `CheckDealDamage()` method
+  
+- Modified [Code/Managers/ExperienceManager.cs](Code/Managers/ExperienceManager.cs)
+  - Removed XP collection print from `IncrementExperience()` method
+  
+- Modified [Code/Controllers/SwordAbilityController.cs](Code/Controllers/SwordAbilityController.cs)
+  - Removed timer wait time print from `OnAbilityUpgradeAdded()`
+  - Removed sword damage print from `OnAbilityUpgradeAdded()`
+  
+- Modified [Code/Controllers/SickleAbilityController.cs](Code/Controllers/SickleAbilityController.cs)
+  - Removed sickle damage print from `OnAbilityUpgradeAdded()`
+  
+- Modified [Code/Events/GameState.cs](Code/Events/GameState.cs)
+  - Removed "Run state reset" print from `ResetRunState()`
+
+**Preserved:**
+- ✅ Kept useful "No valid upgrades available" warning in UpgradeManager (important edge case)
+
+**Acceptance Criteria Verified:**
+- ✅ Console is clean during normal play (no health/XP/upgrade spam)
+- ✅ Player damage still functions correctly
+- ✅ XP collection still works
+- ✅ Upgrades still apply properly
+- ✅ Restart still functions
+- ✅ Build succeeds with no new errors
+
+**Build Status:** ✅ Success
+
+---
+
+## 🎉 Milestone 1: Trustworthy Level-Up Loop - COMPLETE
+
+All 5 stories in Milestone 1 have been successfully implemented and tested:
+- Every offered upgrade now works correctly (rake damage, sickle, sickle damage, rake quickness)
+- Level-up UI is robust and handles edge cases (0, 1, or 2+ upgrades)
+- Restart clears all state and begins a fresh run
+- Console output is clean during normal gameplay
+
+The level-up and restart loop is now trustworthy and ready for players.
