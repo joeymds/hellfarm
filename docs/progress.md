@@ -245,3 +245,44 @@ The level-up and restart loop is now trustworthy and ready for players.
 **Future Enhancement:** Pickup radius and magnet upgrades planned for Milestone 5
 
 **Build Status:** ✅ Success
+
+### ✅ Story 2.4: Preserve Overflow Experience On Level-Up (Completed: 19 April 2026)
+
+**Goal:** Preserve excess XP when leveling up and handle multiple level-ups from large XP gains.
+
+**Changes:**
+- Modified [Code/Managers/ExperienceManager.cs](Code/Managers/ExperienceManager.cs)
+  - Changed from `if` to `while` loop to handle multiple level-ups from single XP gain
+  - Changed `CurrentExperience = 0` to `CurrentExperience -= TargetExperience` to preserve overflow
+  - LevelUp signal emits inside loop for each level gained
+  - ExperienceUpdated signal emits once after all level-ups complete
+
+**Verification:**
+- ✅ [Code/UI/ExperienceBar.cs](Code/UI/ExperienceBar.cs) subscribes to ExperienceUpdated correctly
+- ✅ Bar calculates ratio as currentExperience / targetExperience
+- ✅ Automatically displays overflow progress without code changes
+
+**Acceptance Criteria Verified:**
+- ✅ Excess XP carries over to next level (not lost)
+- ✅ Large XP gains trigger multiple level-ups correctly
+- ✅ Experience bar displays overflow progress accurately
+- ✅ XP count correct after level-ups
+- ✅ Build succeeds with no new errors
+
+**Build Status:** ✅ Success
+
+**Additional Tuning:**
+- Modified [scenes/game_objects/basic_enemy/basic_enemy.tscn](scenes/game_objects/basic_enemy/basic_enemy.tscn)
+  - Reduced sheep MaxSpeed from 55 to 40 for better early-game balance
+
+---
+
+## 🎉 Milestone 2: Runtime Stability And Core Feel - COMPLETE
+
+All 4 stories in Milestone 2 have been successfully implemented and tested:
+- Player death animation works without errors and provides proper visual feedback
+- Ability nodes (rake/sickle) have correct lifetime management
+- XP collection has smooth, satisfying pickup animation
+- XP overflow preserves correctly across level-ups
+
+The game now has a more solid foundation with better moment-to-moment feel and no critical runtime hazards.
