@@ -8,6 +8,7 @@ public partial class ExperienceVial : Node2D
 	private Area2D _area2D;
 	private GameEvents _gameEvents;
 	private Vector2 _startPosition;
+	private bool _isCollecting = false;
 	
 	public override void _Ready()
 	{
@@ -18,11 +19,15 @@ public partial class ExperienceVial : Node2D
 
 	private void OnAreaEntered(Area2D otherArea)
 	{
-		_startPosition = otherArea.GlobalPosition;
-		/*var tween = CreateTween();
-		tween.TweenMethod(new Callable(this, nameof(TweenCollect)), 0.0f, 2.0f, 3.1f);
-		tween.TweenCallback(new Callable(this, nameof(Collect)));*/
-		Collect();
+		if (_isCollecting)
+			return;
+
+		_isCollecting = true;
+		_startPosition = GlobalPosition;
+
+		var tween = CreateTween();
+	tween.TweenMethod(new Callable(this, nameof(TweenCollect)), 0.0f, 1.0f, 0.2f);
+		tween.TweenCallback(new Callable(this, nameof(Collect)));
 	}
 
 	private void Collect()

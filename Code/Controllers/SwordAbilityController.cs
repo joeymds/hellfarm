@@ -84,7 +84,7 @@ public partial class SwordAbilityController : Node
 			return distanceX.CompareTo(distanceY);
 		});
 
-		using var swordInstance = SwordAbility.Instantiate() as SwordAbility;
+		var swordInstance = SwordAbility.Instantiate<SwordAbility>();
 		var foregroundLayer = GetTree().GetFirstNodeInGroup("foreground_layer") as Node2D;
 		if (foregroundLayer == null) return;
 		

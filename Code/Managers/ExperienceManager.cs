@@ -32,20 +32,18 @@ public partial class ExperienceManager : Node
 
 	public void IncrementExperience(int amount)
 	{
-		//CurrentExperience += Mathf.Min(CurrentExperience + amount, TargetExperience);
 		CurrentExperience += amount;
-		
-		EmitSignal("ExperienceUpdated", CurrentExperience, TargetExperience);
-		
-		if (CurrentExperience >= TargetExperience)
+
+		while (CurrentExperience >= TargetExperience)
 		{
+			CurrentExperience -= TargetExperience;
 			CurrentLevel += 1;
 			TargetExperience += TargetExperienceGrowth;
-			CurrentExperience = 0;
-			
-			EmitSignal("ExperienceUpdated", CurrentExperience, TargetExperience);
-			EmitSignal("LevelUp", CurrentLevel);
+
+			EmitSignal(SignalName.LevelUp, (int)CurrentLevel);
 		}
+
+		EmitSignal(SignalName.ExperienceUpdated, CurrentExperience, TargetExperience);
 	}
 	
 }

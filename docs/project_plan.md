@@ -261,8 +261,8 @@ As a player, the run should not feel like the same spawn pattern for five minute
 
 Scope:
 
-- Add at least one new enemy behavior or wave pattern.
-- Possible options: fast weak enemy, slow tank enemy, burst wave, directional herd, or elite variant.
+- Add at least one new enemy behavior or wave pattern beyond the chicken enemy.
+- Possible options: slow tank enemy, burst wave, directional herd, or elite variant.
 - Keep new content compatible with the existing component system.
 
 Acceptance criteria:
@@ -278,7 +278,35 @@ Suggested files:
 - `Code/Managers/EnemyManager.cs`
 - `scenes/game_objects/`
 
-### Story 3.3: Add Basic Combat Telemetry For Tuning
+### Story 3.3: Add Chicken Enemy
+
+As a player, I should face a fast but fragile enemy that changes how I move and prioritize threats.
+
+Scope:
+
+- Create a chicken enemy scene using `scenes/game_objects/chicken_enemy/chicken-sheet.png`.
+- Add a chicken enemy script or reuse the existing enemy script if the component exports are enough.
+- Tune chickens to have very low health, faster movement, and a faster attack cadence than sheep and pigs.
+- Add chickens to the spawn progression so they appear earlier and/or more frequently than heavier enemies.
+- Make chickens visually distinct and readable at gameplay scale.
+
+Acceptance criteria:
+
+- Chickens spawn during a run from the enemy manager.
+- Chickens move faster than existing sheep and pig enemies.
+- Chickens attack or damage the player faster than existing enemies.
+- Chickens have noticeably lower HP than existing enemies.
+- Chicken art animates or displays correctly from `chicken-sheet.png`.
+- `dotnet build HellFarm.csproj` succeeds.
+
+Suggested files:
+
+- `Code/Actors/`
+- `Code/Managers/EnemyManager.cs`
+- `scenes/manager/enemy_manager.tscn`
+- `scenes/game_objects/chicken_enemy/`
+
+### Story 3.4: Add Basic Combat Telemetry For Tuning
 
 As a developer, I need simple run metrics to tune the game.
 

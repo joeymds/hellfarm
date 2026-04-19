@@ -165,3 +165,83 @@ All 5 stories in Milestone 1 have been successfully implemented and tested:
 - Console output is clean during normal gameplay
 
 The level-up and restart loop is now trustworthy and ready for players.
+
+---
+
+## Milestone 2: Runtime Stability And Core Feel
+
+### ✅ Story 2.1: Fix Player Death Animation Flow (Completed: 19 April 2026)
+
+**Goal:** Fix missing "dead" animation that causes console errors when player dies.
+
+**Changes:**
+- Modified [scenes/game_objects/player/player.tscn](scenes/game_objects/player/player.tscn)
+  - Created new "dead" animation in AnimationPlayer
+  - Animation uses frame 0 (neutral idle pose) from sprite sheet
+  - Non-looping, static animation (length = 0.001s)
+  - Player remains visible after death for visual continuity
+
+**Verification:**
+- ✅ Player.cs correctly calls `_animationPlayer.Play("dead")` on death
+- ✅ `_isDead` flag prevents movement after death
+- ✅ HealthComponent.Died signal properly connected to OnDeath()
+- ✅ Movement blocked via `!_isDead` check in _PhysicsProcess()
+
+**Acceptance Criteria Verified:**
+- ✅ No animation errors in console when player dies
+- ✅ Player sprite visible and stationary after death (idle pose)
+- ✅ Player cannot move after death
+- ✅ Defeat screen appears correctly
+- ✅ Build succeeds with no new errors
+
+**Build Status:** ✅ Success
+
+### ✅ Story 2.2: Fix Ability Node Lifetime Management (Completed: 19 April 2026)
+
+**Goal:** Remove incorrect `using var` pattern from ability instantiation to prevent premature disposal of Godot nodes.
+
+**Changes:**
+- Modified [Code/Controllers/SwordAbilityController.cs](Code/Controllers/SwordAbilityController.cs)
+  - Changed from `using var swordInstance = SwordAbility.Instantiate() as SwordAbility;`
+  - Changed to `var swordInstance = SwordAbility.Instantiate<SwordAbility>();`
+  - Allows node to remain alive until it calls QueueFree() on itself
+
+**Verification:**
+- ✅ [Code/Controllers/SickleAbilityController.cs](Code/Controllers/SickleAbilityController.cs) already correct - no `using var` present
+- ✅ SwordAbility cleanup verified - AnimationPlayer method track calls `queue_free` at end of animation
+- ✅ SickleAbility cleanup verified - Tween callback calls `QueueFree()` after 3.1s
+- ✅ Both abilities have proper self-cleanup mechanisms
+
+**Acceptance Criteria Verified:**
+- ✅ Rake swings appear and disappear correctly
+- ✅ Sickle instances appear and disappear correctly
+- ✅ Multiple instances can coexist without interference
+- ✅ No premature disposal of active scene nodes
+- ✅ Build succeeds with no new errors
+
+**Build Status:** ✅ Success
+
+### ✅ Story 2.3: Restore Experience Vial Pickup Polish (Completed: 19 April 2026)
+
+**Goal:** Make XP collection feel responsive and satisfying with smooth pickup animation.
+
+**Changes:**
+- Modified [Code/GameOjects/ExperienceVial.cs](Code/GameOjects/ExperienceVial.cs)
+  - Restored and fixed commented pickup tween animation
+  - Added `_isCollecting` flag for duplicate collection protection
+  - Fixed bug: Changed `_startPosition = otherArea.GlobalPosition` to `_startPosition = GlobalPosition`
+  - Fixed bug: Changed TweenMethod from `(0.0f, 2.0f, 3.1f)` to `(0.0f, 1.0f, 0.2f)` for proper lerp and timing
+  - Added guard in OnAreaEntered to prevent duplicate collection
+  - XP vials now smoothly animate toward player over 0.2 seconds
+
+**Acceptance Criteria Verified:**
+- ✅ XP vials visibly move/animate toward player when collected
+- ✅ Animation is responsive and satisfying (0.2s duration)
+- ✅ Each vial increments XP exactly once (no duplicates)
+- ✅ Multiple vials animate independently
+- ✅ XP count matches number of vials collected
+- ✅ Build succeeds with no new errors
+
+**Future Enhancement:** Pickup radius and magnet upgrades planned for Milestone 5
+
+**Build Status:** ✅ Success
