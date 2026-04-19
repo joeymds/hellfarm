@@ -1,5 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
+*.uid
+*.csproj.old.*
 
 # Godot-specific ignores
 .import/
@@ -13,3 +15,10 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# .NET build outputs
+bin/
+obj/
+
+# macOS metadata
+.DS_Store

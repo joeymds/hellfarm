@@ -18,6 +18,7 @@ public partial class SwordAbilityController : Node
 	private Timer _timer;
 
 	private double baseWaitTime;
+	private float baseDamage;
 	
 	public override void _Ready()
 	{
@@ -29,26 +30,40 @@ public partial class SwordAbilityController : Node
 		_timer.Timeout += OnTimerTimeout;
 		
 		baseWaitTime = _timer.WaitTime;
+		baseDamage = Damage;
 	}
 
 	private void OnAbilityUpgradeAdded(AbilityUpgrade upgrade)
 	{
-		if (upgrade.Id != "sword_rate")
+		if (upgrade.Id != "sword_rate" && upgrade.Id != "rake_damage")
 			return;
 
-		var percentReduction = _gameState.PlayerUpgrades
-			.Where(x => x.Id == "sword_rate")
-			.Sum(x => x.Quantity * .1);
-		
-		var newWaitTime = baseWaitTime * (1 - percentReduction);
-		
-		if (newWaitTime < 0.05)
-			newWaitTime = 0.05;
-		
-		_timer.WaitTime = newWaitTime;
-		_timer.Start();
-		
-		GD.Print($"Timer WaitTime: {_timer.WaitTime}");
+		if (upgrade.Id == "sword_rate")
+		{
+			var percentReduction = _gameState.PlayerUpgrades
+				.Where(x => x.Id == "sword_rate")
+				.Sum(x => x.Quantity * .1);
+			
+			var newWaitTime = baseWaitTime * (1 - percentReduction);
+			
+			if (newWaitTime < 0.05)
+				newWaitTime = 0.05;
+			
+			_timer.WaitTime = newWaitTime;
+			_timer.Start();
+			
+			GD.Print($"Timer WaitTime: {_timer.WaitTime}");
+		}
+
+		if (upgrade.Id == "rake_damage")
+		{
+			var damageIncrease = _gameState.PlayerUpgrades
+				.Where(x => x.Id == "rake_damage")
+				.Sum(x => x.Quantity * 0.15);
+
+			Damage = (float)(baseDamage * (1 + damageIncrease));
+			GD.Print($"Sword Damage: {Damage}");
+		}
 	}
 
 	private void OnTimerTimeout()
