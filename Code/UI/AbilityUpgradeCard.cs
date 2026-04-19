@@ -30,6 +30,9 @@ public partial class AbilityUpgradeCard : PanelContainer
 
     public void SetAbilityUpgrade(AbilityUpgrade upgrade)
     {
+        if (upgrade == null)
+            return;
+
         _nameLabel.Text = upgrade.Name;
         _descriptionLabel.Text = upgrade.Description;
     }

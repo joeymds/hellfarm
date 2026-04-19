@@ -60,15 +60,18 @@ public partial class UpgradeManager : Node
         _gameEvents.EmitAbilityUpgradeAdded(upgrade);
     }
 
-    private AbilityUpgrade[] PickUpgrade()
+    private List<AbilityUpgrade> PickUpgrade()
     {
         // We only want to present the player with 2 upgrades
-        var chosenUpgrades = new AbilityUpgrade[2];
+        var chosenUpgrades = new List<AbilityUpgrade>(2);
         var filteredUpgrades = new List<AbilityUpgrade>();
         
         // filter out any upgrades that require an existing upgrade
         foreach (var item in UpgradePool)
         {
+            if (item == null)
+                continue;
+
             if (string.IsNullOrEmpty(item.Requires))
             {
                 filteredUpgrades.Add(item);
@@ -89,10 +92,8 @@ public partial class UpgradeManager : Node
                 break;
             
             var chosenUpgrade = filteredUpgrades[GD.RandRange(0, filteredUpgrades.Count - 1)];
-            if (chosenUpgrade == null)
-                break;
-            
-            chosenUpgrades[i] = chosenUpgrade;
+
+            chosenUpgrades.Add(chosenUpgrade);
             filteredUpgrades = filteredUpgrades.Where(f => f.Id != chosenUpgrade.Id).ToList();
         }
 
@@ -111,14 +112,16 @@ public partial class UpgradeManager : Node
     
     private void OnLevelUp(int newlevel)
     {
-        if (UpgradePool.Length == 0)
+        if (UpgradePool == null || UpgradePool.Length == 0)
             return;
-        
-        var chosenUpgrade = UpgradePool[GD.RandRange(0, UpgradePool.Length - 1)];
-        if (chosenUpgrade == null)
-            return;
-        
+
         var chosenUpgrades = PickUpgrade();
+        if (chosenUpgrades.Count == 0)
+        {
+            GD.Print("No valid upgrades available on level up.");
+            return;
+        }
+
         var upgradeScreenInstance = UpgradeScreenScene.Instantiate<UpgradeScreen>();
         AddChild(upgradeScreenInstance);
         upgradeScreenInstance.SetAbilityUpgrades(chosenUpgrades);

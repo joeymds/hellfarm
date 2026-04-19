@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 using HellFarm.Code.Events;
 using HellFarm.Code.Upgrades;
@@ -21,10 +22,16 @@ public partial class UpgradeScreen : CanvasLayer
         GetTree().Paused = true;
     }
 
-    public void SetAbilityUpgrades(AbilityUpgrade[] upgrades)
+    public void SetAbilityUpgrades(List<AbilityUpgrade> upgrades)
     {
+        if (upgrades == null || upgrades.Count == 0)
+            return;
+
         foreach (var upgrade in upgrades)
         {
+            if (upgrade == null)
+                continue;
+
             var cardInstance = UpgradeCardScene.Instantiate<AbilityUpgradeCard>();
             _cardContainer.AddChild(cardInstance);
             cardInstance.SetAbilityUpgrade(upgrade);
