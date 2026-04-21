@@ -9,9 +9,9 @@
 [ext_resource type="Shader" uid="uid://kuxdp6i2lknd" path="res://scenes/components/hit_flash_component.gdshader" id="7_q56f4"]
 [ext_resource type="PackedScene" uid="uid://dldd4cbxgcxx" path="res://scenes/components/hurt_box_component.tscn" id="8_1wywg"]
 [ext_resource type="PackedScene" uid="uid://l0hhvhbspyrn" path="res://scenes/ui/floating_text.tscn" id="9_rt1dj"]
-[ext_resource type="Texture2D" uid="uid://ccr88bnnth76r" path="res://scenes/game_objects/chicken_enemy/chicken-sheet.png" id="10_cshrt"]
+[ext_resource type="Texture2D" uid="uid://dixt4juuyf0b1" path="res://scenes/game_objects/chicken_enemy/chicken-enemy.png" id="10_8q03i"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8q03i"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u0pm8"]
 resource_local_to_scene = true
 shader = ExtResource("7_q56f4")
 shader_parameter/lerp_percent = 0.0
@@ -36,42 +36,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(1, 1)]
-}
 
 [sub_resource type="Animation" id="Animation_p8yb3"]
 resource_name = "death"
 length = 0.4
 step = 0.1
-tracks/0/type = "value"
+tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0.1, 0.1)]
-}
-tracks/1/type = "method"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0.4),
 "transitions": PackedFloat32Array(1),
 "values": [{
@@ -79,10 +55,22 @@ tracks/1/keys = {
 "method": &"EndOfLife"
 }]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11]
+}
 
 [sub_resource type="Animation" id="Animation_q4ftr"]
 resource_name = "down"
-length = 0.3
+length = 0.18
 loop_mode = 1
 step = 0.075
 tracks/0/type = "value"
@@ -92,15 +80,15 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.075, 0.15, 0.225),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.100373104),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [5, 6, 7, 8]
+"values": [4, 5]
 }
 
 [sub_resource type="Animation" id="Animation_04637"]
 resource_name = "left"
-length = 0.3
+length = 0.15384616
 loop_mode = 1
 step = 0.075
 tracks/0/type = "value"
@@ -110,15 +98,15 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.075, 0.15, 0.225),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.075),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [0, 1, 2, 3]
+"values": [0, 1]
 }
 
 [sub_resource type="Animation" id="Animation_86ocm"]
 resource_name = "right"
-length = 0.3
+length = 0.15384616
 loop_mode = 1
 step = 0.075
 tracks/0/type = "value"
@@ -128,15 +116,15 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.075, 0.15, 0.225),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.075),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [15, 16, 17, 18]
+"values": [2, 3]
 }
 
 [sub_resource type="Animation" id="Animation_i3q3k"]
 resource_name = "up"
-length = 0.3
+length = 0.15384616
 loop_mode = 1
 step = 0.075
 tracks/0/type = "value"
@@ -146,10 +134,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.075, 0.15, 0.225),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.075),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [10, 11, 12, 13]
+"values": [6, 7]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2ekyl"]
@@ -217,7 +205,7 @@ HealthComp = NodePath("../HealthComponent")
 [node name="HitFlashComponent" parent="." unique_id=2111653497 node_paths=PackedStringArray("HealthCmp", "Sprite") instance=ExtResource("6_w2pti")]
 HealthCmp = NodePath("../HealthComponent")
 Sprite = NodePath("../Sprite2D")
-HitFlashMaterial = SubResource("ShaderMaterial_8q03i")
+HitFlashMaterial = SubResource("ShaderMaterial_u0pm8")
 
 [node name="HurtBoxComponent" parent="." unique_id=503270072 node_paths=PackedStringArray("HealthComp") instance=ExtResource("8_1wywg")]
 HealthComp = NodePath("../HealthComponent")
@@ -233,8 +221,8 @@ shape = SubResource("CircleShape2D_qnvkp")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1098891059]
 position = Vector2(0, -4)
-texture = ExtResource("10_cshrt")
-hframes = 5
+texture = ExtResource("10_8q03i")
+hframes = 4
 vframes = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1223278057]
