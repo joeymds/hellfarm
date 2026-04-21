@@ -6,7 +6,7 @@ namespace HellFarm.Code.Abilities;
 public partial class DynamiteAbility : CharacterBody2D
 {
     [Export] public float Damage { get; set; } = 0;
-    [Export] public float ExplosionRadius { get; set; } = 100;
+    [Export] public float ExplosionRadius { get; set; } = 60;
     [Export] public float ThrowSpeed { get; set; } = 100;
 
     public Vector2 InitialVelocity { get; set; } = Vector2.Zero;
@@ -28,7 +28,7 @@ public partial class DynamiteAbility : CharacterBody2D
     {
         _fuseTimer = GetNodeOrNull<Timer>("Timer");
         _hitBoxComponent = GetNodeOrNull<HitBoxComponent>("HitBoxComponent");
-        _animationPlayer = GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
+        _animationPlayer = GetNodeOrNull<AnimationPlayer>("DynamiteStick/AnimationPlayer");
 
         if (_fuseTimer == null)
         {
@@ -39,11 +39,7 @@ public partial class DynamiteAbility : CharacterBody2D
 
         if (_animationPlayer != null)
         {
-            _animationPlayer.AnimationFinished += OnAnimationFinished;
-            if (_animationPlayer.HasAnimation(ThrowAnimationName))
-            {
-                _animationPlayer.Play(ThrowAnimationName);
-            }
+            // The dynamite_stick scene autoplays "throw", so we don't need to call Play here
         }
         else
         {
@@ -71,11 +67,6 @@ public partial class DynamiteAbility : CharacterBody2D
         if (_fuseTimer != null)
         {
             _fuseTimer.Timeout -= OnFuseTimerTimeout;
-        }
-
-        if (_animationPlayer != null)
-        {
-            _animationPlayer.AnimationFinished -= OnAnimationFinished;
         }
     }
 
@@ -121,6 +112,7 @@ public partial class DynamiteAbility : CharacterBody2D
         if (_animationPlayer != null && _animationPlayer.HasAnimation(ExplodeAnimationName))
         {
             _animationPlayer.Play(ExplodeAnimationName);
+            // Animation will call queue_free when finished
             return;
         }
 
@@ -133,12 +125,6 @@ public partial class DynamiteAbility : CharacterBody2D
             GD.PushWarning($"{Name}: Missing 'explode' animation. Freeing node immediately.");
         }
 
-        QueueFree();
-    }
-
-    // Optional method-track hook from explode animation timeline.
-    public void OnExplodeAnimationFinished()
-    {
         QueueFree();
     }
 
@@ -182,14 +168,6 @@ public partial class DynamiteAbility : CharacterBody2D
             {
                 circleShape.Radius = ExplosionRadius;
             }
-        }
-    }
-
-    private void OnAnimationFinished(StringName animationName)
-    {
-        if (animationName == ExplodeAnimationName)
-        {
-            QueueFree();
         }
     }
 }

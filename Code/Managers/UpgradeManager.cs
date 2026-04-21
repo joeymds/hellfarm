@@ -20,18 +20,6 @@ public partial class UpgradeManager : Node
 	{
 		_gameState = GetNode<GameState>("/root/GameState");
 		_gameEvents = GetNode<GameEvents>("/root/GameEvents");
-
-		GD.Print($"UpgradeManager: UpgradePool has {UpgradePool?.Length ?? 0} upgrades");
-		if (UpgradePool != null)
-		{
-			foreach (var upgrade in UpgradePool)
-			{
-				if (upgrade != null)
-					GD.Print($"  - {upgrade.Id}: {upgrade.Name} (Requires: '{upgrade.Requires}')");
-				else
-					GD.Print("  - NULL UPGRADE");
-			}
-		}
 		
 		ExperienceMgr.LevelUp += OnLevelUp;    
 	}
@@ -82,10 +70,7 @@ public partial class UpgradeManager : Node
 		foreach (var item in UpgradePool)
 		{
 			if (item == null)
-			{
-				GD.Print("PickUpgrade: Filtered out null upgrade entry");
 				continue;
-			}
 
 			if (string.IsNullOrEmpty(item.Requires))
 			{
@@ -98,17 +83,7 @@ public partial class UpgradeManager : Node
 				{
 					filteredUpgrades.Add(item);
 				}
-				else
-				{
-					GD.Print($"PickUpgrade: Filtered out {item.Id} because requirement '{item.Requires}' was not found in player upgrades");
-				}
 			}
-		}
-
-		GD.Print($"PickUpgrade: {filteredUpgrades.Count} upgrades passed filter (from {UpgradePool.Length} total)");
-		foreach (var item in filteredUpgrades)
-		{
-			GD.Print($"  - Available: {item.Id}");
 		}
 		
 		for (var i = 0; i < 2; i++)
@@ -120,12 +95,6 @@ public partial class UpgradeManager : Node
 
 			chosenUpgrades.Add(chosenUpgrade);
 			filteredUpgrades = filteredUpgrades.Where(f => f.Id != chosenUpgrade.Id).ToList();
-		}
-
-		GD.Print($"PickUpgrade: Returning {chosenUpgrades.Count} chosen upgrades");
-		foreach (var item in chosenUpgrades)
-		{
-			GD.Print($"  - Chosen: {item.Id}");
 		}
 
 		return chosenUpgrades;
