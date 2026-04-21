@@ -1,0 +1,98 @@
+[gd_scene load_steps=8 format=3 uid="uid://cxq0l6j6l1q6m"]
+
+[ext_resource type="Script" path="res://Code/Abilities/DynamiteAbility.cs" id="1_41xab"]
+[ext_resource type="Texture2D" uid="uid://b8bsw0nnqd6cf" path="res://scenes/game_objects/dynamite_stick/dynamite-01.png" id="2_3l90d"]
+[ext_resource type="PackedScene" uid="uid://br48orvfmoktc" path="res://scenes/components/hit_box_component.tscn" id="3_7f6u1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7xh3y"]
+radius = 100.0
+
+[sub_resource type="Animation" id="Animation_throw"]
+resource_name = "throw"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_explode"]
+resource_name = "explode"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(3, 3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_i83kl"]
+_data = {
+"explode": SubResource("Animation_explode"),
+"throw": SubResource("Animation_throw")
+}
+
+[node name="DynamiteAbility" type="CharacterBody2D"]
+script = ExtResource("1_41xab")
+Damage = 10.0
+ExplosionRadius = 100.0
+ThrowSpeed = 100.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_3l90d")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="HitBoxComponent" parent="." instance=ExtResource("3_7f6u1")]
+collision_layer = 4
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxComponent"]
+shape = SubResource("CircleShape2D_7xh3y")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_i83kl")
+}

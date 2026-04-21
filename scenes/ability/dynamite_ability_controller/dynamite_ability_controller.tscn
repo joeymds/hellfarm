@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6a8b7c7d8e9f"]
+
+[ext_resource type="Script" path="res://Code/Controllers/DynamiteAbilityController.cs" id="1_a2b3c"]
+[ext_resource type="PackedScene" uid="uid://cxq0l6j6l1q6m" path="res://scenes/ability/dynamite_ability/dynamite_ability.tscn" id="2_d4e5f"]
+
+[node name="DynamiteAbilityController" type="Node"]
+script = ExtResource("1_a2b3c")
+DynamiteScene = ExtResource("2_d4e5f")
+Damage = 10.0
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true

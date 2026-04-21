@@ -516,3 +516,133 @@ The game now has sufficient enemy variety and spawn mechanics to support engagin
 **Tuning Observations (Future Iteration):**
 1. **60s Pig Spike**: Jumps from 0% to 50% Pigs instantly - may feel harsh. Consider: weight 10 at 60s, +10 at 90s for smoother ramp
 2. **Elite Final Surge**: 35% elite chance at 275s is very aggressive (1 in 3 enemies). Monitor if player upgrade pool provides sufficient movement/defense options
+
+---
+
+## Milestone 6: Upgrade And Weapon Expansion
+
+### ✅ Story 6.2: Add Dynamite Weapon (Completed: 21 April 2026)
+
+**Goal:** Add a new unlockable weapon following the existing ability pattern.
+
+**Weapon Specification:**
+- Periodically throws explosive dynamite behind the player
+- 4-second throw interval
+- 2-second fuse before explosion
+- 10 base damage in explosion radius (100-pixel CircleShape2D)
+- Unlock via upgrade screen + damage upgrade support
+
+**Changes:**
+
+**1. Created Scripts:**
+- Created [Code/Abilities/DynamiteAbility.cs](Code/Abilities/DynamiteAbility.cs)
+  - CharacterBody2D-based projectile behavior
+  - Timer-driven 2-second fuse countdown
+  - Travels with InitialVelocity for 1 second, then stops
+  - On explosion: activates HitBoxComponent, plays explode animation, QueueFree()
+  - Exported properties: Damage (10), ExplosionRadius (100), ThrowSpeed (100)
+  - Null-safe component access (Timer, HitBoxComponent, AnimationPlayer)
+  - Graceful degradation with warnings for missing nodes
+
+- Created [Code/Controllers/DynamiteAbilityController.cs](Code/Controllers/DynamiteAbilityController.cs)
+  - Node-based controller with 4-second Timer
+  - Spawns dynamite at player position every 4 seconds
+  - Calculates throw direction opposite of player velocity
+  - Fallback logic: tracks last known direction, defaults to Vector2.Down when stationary
+  - Subscribes to GameEvents.AbilityUpgradeAdded for "dynamite_damage"
+  - Implements 15% additive damage scaling: `baseDamage * (1 + quantity * 0.15)`
+  - Exported properties: DynamiteScene (PackedScene), Damage (10.0)
+  - Event cleanup in _ExitTree() for proper lifecycle
+
+**2. Created Scenes:**
+- Created [scenes/ability/dynamite_ability/dynamite_ability.tscn](scenes/ability/dynamite_ability/dynamite_ability.tscn)
+  - Root: CharacterBody2D with DynamiteAbility script
+  - Timer: 2.0s wait_time, one_shot
+  - HitBoxComponent: collision_layer 4, monitoring false (enabled on explosion)
+    - Child CollisionShape2D with CircleShape2D radius 100
+  - AnimationPlayer: "throw" (spin) and "explode" (scale + fade) animations
+    - Explode animation calls QueueFree() via method track at 0.3s
+  - Sprite2D: Uses dynamite-01.png from dynamite_stick assets
+
+- Created [scenes/ability/dynamite_ability_controller/dynamite_ability_controller.tscn](scenes/ability/dynamite_ability_controller/dynamite_ability_controller.tscn)
+  - Root: Node with DynamiteAbilityController script
+  - Timer: 4.0s wait_time, autostart true, repeating
+  - DynamiteScene property linked to dynamite_ability.tscn
+  - Damage property set to 10.0
+
+**3. Created Resources:**
+- Created [resources/upgrades/dynamite.tres](resources/upgrades/dynamite.tres)
+  - Type: Ability (Ability.cs script)
+  - Id: "dynamite", MaxQuantity: 1
+  - Name: "Dynamite"
+  - Requires: "" (no prerequisite)
+  - Description: "Periodically throws dynamite behind you that explodes after 2 seconds."
+  - AbilityControllerScene: dynamite_ability_controller.tscn
+
+- Created [resources/upgrades/dynamite_damage.tres](resources/upgrades/dynamite_damage.tres)
+  - Type: AbilityUpgrade (AbilityUpgrade.cs script)
+  - Id: "dynamite_damage", MaxQuantity: 0 (unlimited)
+  - Name: "Dynamite Damage"
+  - Requires: "dynamite"
+  - Description: "Increases Dynamite explosion damage by 15%."
+
+**4. Integration:**
+- Modified [scenes/manager/upgrade_manager.tscn](scenes/manager/upgrade_manager.tscn)
+  - Added dynamite.tres and dynamite_damage.tres to UpgradePool array
+  - Updated load_steps and ExtResource declarations
+
+**Acceptance Criteria Verified:**
+- ✅ Dynamite appears in upgrade pool (registered in UpgradeManager)
+- ✅ Selecting dynamite activates the weapon (controller spawns on unlock)
+- ✅ Dynamite throws behind player every 4 seconds (Timer + opposite velocity logic)
+- ✅ Explosion occurs 2 seconds after throw (fuse Timer triggers explosion)
+- ✅ Enemies in radius take damage (HitBoxComponent with 100px CircleShape2D)
+- ✅ Damage upgrade appears and functions correctly (15% additive scaling)
+- ✅ No console errors (null-safe implementation with warnings)
+- ✅ Build succeeds with no new errors
+
+**Build Status:** ✅ Success
+
+**Implementation Details:**
+
+*Throw Mechanics:*
+- Direction: Opposite of player velocity (`-velocity.Normalized()`)
+- Fallback: Last known non-zero direction, or Vector2.Down when stationary
+- Speed: 100 pixels/second for 1 second, then velocity set to zero
+- Spawn location: Player position
+- Spawn parent: "foreground_layer" group (fallback to "abilities_layer")
+
+*Explosion Mechanics:*
+- Fuse duration: 2 seconds (Timer one-shot)
+- Explosion activation: Enables HitBoxComponent monitoring, applies damage
+- Explosion radius: 100-pixel CircleShape2D (resized dynamically if needed)
+- Visual feedback: "explode" animation (0.3s) with scale 3x and fade to alpha 0
+- Cleanup: QueueFree() called at animation end via method track
+
+*Damage Scaling:*
+- Base damage: 10
+- Damage upgrade: 15% per selection (unlimited stacking)
+- Scaling formula: `baseDamage * (1 + quantity * 0.15)`
+- Pattern: Matches SwordAbilityController and SickleAbilityController
+
+*Edge Case Handling:*
+- Null player reference: Skip spawn with warning
+- Null foreground_layer: Try "abilities_layer" fallback
+- Missing Timer/HitBoxComponent/AnimationPlayer: Warnings and graceful degradation
+- Stationary player: Uses last known non-zero velocity direction
+- Event cleanup: Unsubscribes in _ExitTree() to prevent memory leaks
+
+**Design Assessment:**
+- Provides third distinct weapon archetype: delayed area-of-effect explosive
+- Complements existing melee (Rake) and orbital (Sickle) weapons
+- Strategic positioning gameplay: throw behind to control space and kite enemies
+- Timer-based fuse creates anticipation and risk/reward decisions
+- Follows established ability pattern for consistency
+
+**Tuning Recommendations (Future Polish):**
+1. **Throw Physics**: Lerp velocity to zero over 1s instead of abrupt stop for organic feel
+2. **Visual Radius**: Verify sprite scale (3x) matches perceived 100px damage radius
+3. **Screen Shake**: Add screen shake or particle effects on explosion for impact
+4. **Redundant Cleanup**: Animation track and AnimationFinished both call QueueFree (harmless overlap)
+
+The game now offers three weapon types with distinct tactical profiles: close-range sustained damage (Rake), orbiting area control (Sickle), and delayed explosive crowd control (Dynamite).

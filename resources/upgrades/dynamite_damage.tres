@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dsm4kl3n8vp2r"]
+
+[ext_resource type="Script" path="res://Code/Upgrades/AbilityUpgrade.cs" id="1_7y4jv"]
+
+[resource]
+script = ExtResource("1_7y4jv")
+Id = "dynamite_damage"
+MaxQuantity = 0
+Name = "Dynamite Damage"
+Requires = "dynamite"
+Description = "Increases Dynamite explosion damage by 15%."
