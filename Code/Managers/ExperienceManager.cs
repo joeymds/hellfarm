@@ -22,17 +22,26 @@ public partial class ExperienceManager : Node
 	{
 		_gameEvents = GetNode<GameEvents>("/root/GameEvents");
 		_gameEvents.ExperienceVialCollected += OnExperienceVialCollected;
+	}
 
+	public override void _ExitTree()
+	{
+		if (_gameEvents != null)
+		{
+			_gameEvents.ExperienceVialCollected -= OnExperienceVialCollected;
+		}
 	}
 
 	private void OnExperienceVialCollected(int number)
 	{
+		GD.Print($"ExperienceManager: Vial collected, adding {number} experience");
 		IncrementExperience(number);
 	}
 
 	public void IncrementExperience(int amount)
 	{
 		CurrentExperience += amount;
+		GD.Print($"ExperienceManager: CurrentExperience = {CurrentExperience}, TargetExperience = {TargetExperience}");
 
 		while (CurrentExperience >= TargetExperience)
 		{

@@ -31,6 +31,8 @@ public partial class UpgradeManager : Node
 
 	private void ApplyUpgrade(AbilityUpgrade upgrade)
 	{ 
+		GD.Print($"ApplyUpgrade: Applying upgrade '{upgrade.Id}' (Name: {upgrade.Name})");
+		
 		if (_gameState.PlayerUpgrades.Count > 0)
 		{
 			var hasUpgrade = _gameState.PlayerUpgrades.Find(u => u.Id == upgrade.Id);
@@ -40,6 +42,7 @@ public partial class UpgradeManager : Node
 			}
 			else
 			{
+				GD.Print($"ApplyUpgrade: Incrementing existing upgrade '{upgrade.Id}' quantity");
 				hasUpgrade.Quantity++;
 			}
 		} 
@@ -66,6 +69,12 @@ public partial class UpgradeManager : Node
 		var chosenUpgrades = new List<AbilityUpgrade>(2);
 		var filteredUpgrades = new List<AbilityUpgrade>();
 		
+		GD.Print($"PickUpgrade: Current player upgrades:");
+		foreach (var pu in _gameState.PlayerUpgrades)
+		{
+			GD.Print($"  - {pu.Id} (Quantity: {pu.Quantity})");
+		}
+		
 		// filter out any upgrades that require an existing upgrade
 		foreach (var item in UpgradePool)
 		{
@@ -81,7 +90,12 @@ public partial class UpgradeManager : Node
 				var existingItem = _gameState.PlayerUpgrades.FirstOrDefault(pu => pu.Id == item.Requires);
 				if (existingItem != null)
 				{
+					GD.Print($"PickUpgrade: {item.Id} passed filter (requires '{item.Requires}' which exists)");
 					filteredUpgrades.Add(item);
+				}
+				else
+				{
+					GD.Print($"PickUpgrade: {item.Id} filtered out (requires '{item.Requires}' which does NOT exist)");
 				}
 			}
 		}
@@ -102,6 +116,7 @@ public partial class UpgradeManager : Node
 
 	private void InsertUpgrade(AbilityUpgrade upgrade)
 	{
+		GD.Print($"InsertUpgrade: Adding '{upgrade.Id}' to PlayerUpgrades");
 		_gameState.PlayerUpgrades.Add(new Upgrade
 		{
 			Id = upgrade.Id,

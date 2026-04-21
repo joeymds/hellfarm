@@ -10,4 +10,4 @@ Id = "dynamite"
 MaxQuantity = 1
 Name = "Dynamite"
 Requires = ""
-Description = "Periodically throws dynamite behind you that explodes after 2 seconds!"
+Description = "Periodically throws dynamite behind you that explodes after 3 seconds!"

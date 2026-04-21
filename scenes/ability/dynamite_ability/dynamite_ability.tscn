@@ -8,6 +8,8 @@
 radius = 60.0
 
 [node name="DynamiteAbility" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
 script = ExtResource("1_41xab")
 Damage = 10.0
 ExplosionRadius = 60.0
@@ -16,7 +18,7 @@ ThrowSpeed = 100.0
 [node name="DynamiteStick" parent="." instance=ExtResource("2_stick")]
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 3.0
 one_shot = true
 
 [node name="HitBoxComponent" parent="." instance=ExtResource("3_7f6u1")]

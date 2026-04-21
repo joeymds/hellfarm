@@ -12,9 +12,10 @@ public partial class DynamiteAbility : CharacterBody2D
     public Vector2 InitialVelocity { get; set; } = Vector2.Zero;
 
     private const float TravelDurationSeconds = 1.0f;
-    private const float FuseDurationSeconds = 2.0f;
+    private const float FuseDurationSeconds = 3.0f;
 
     private static readonly StringName ThrowAnimationName = "throw";
+    private static readonly StringName WaitAnimationName = "wait";
     private static readonly StringName ExplodeAnimationName = "explode";
 
     private Timer _fuseTimer;
@@ -23,6 +24,7 @@ public partial class DynamiteAbility : CharacterBody2D
 
     private float _elapsedSeconds;
     private bool _hasExploded;
+    private bool _hasLanded;
 
     public override void _Ready()
     {
@@ -77,9 +79,16 @@ public partial class DynamiteAbility : CharacterBody2D
 
         _elapsedSeconds += (float)delta;
 
-        if (_elapsedSeconds >= TravelDurationSeconds)
+        if (_elapsedSeconds >= TravelDurationSeconds && !_hasLanded)
         {
+            _hasLanded = true;
             Velocity = Vector2.Zero;
+            
+            // Switch to wait animation when landing
+            if (_animationPlayer != null && _animationPlayer.HasAnimation(WaitAnimationName))
+            {
+                _animationPlayer.Play(WaitAnimationName);
+            }
         }
 
         MoveAndSlide();
