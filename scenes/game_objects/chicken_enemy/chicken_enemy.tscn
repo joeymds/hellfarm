@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://l0hhvhbspyrn" path="res://scenes/ui/floating_text.tscn" id="9_rt1dj"]
 [ext_resource type="Texture2D" uid="uid://dixt4juuyf0b1" path="res://scenes/game_objects/chicken_enemy/chicken-enemy.png" id="10_8q03i"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_u0pm8"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8q03i"]
 resource_local_to_scene = true
 shader = ExtResource("7_q56f4")
 shader_parameter/lerp_percent = 0.0
@@ -189,7 +189,7 @@ motion_mode = 1
 script = ExtResource("1_io7df")
 
 [node name="HealthComponent" parent="." unique_id=1437327528 instance=ExtResource("2_pnog4")]
-MaxHealth = 6.0
+MaxHealth = 5.0
 
 [node name="VelocityComponent" parent="." unique_id=1714138843 instance=ExtResource("5_1d1fo")]
 MaxSpeed = 65
@@ -205,7 +205,7 @@ HealthComp = NodePath("../HealthComponent")
 [node name="HitFlashComponent" parent="." unique_id=2111653497 node_paths=PackedStringArray("HealthCmp", "Sprite") instance=ExtResource("6_w2pti")]
 HealthCmp = NodePath("../HealthComponent")
 Sprite = NodePath("../Sprite2D")
-HitFlashMaterial = SubResource("ShaderMaterial_u0pm8")
+HitFlashMaterial = SubResource("ShaderMaterial_8q03i")
 
 [node name="HurtBoxComponent" parent="." unique_id=503270072 node_paths=PackedStringArray("HealthComp") instance=ExtResource("8_1wywg")]
 HealthComp = NodePath("../HealthComponent")

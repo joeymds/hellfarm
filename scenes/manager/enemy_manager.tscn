@@ -10,8 +10,14 @@ script = ExtResource("1_ikfem")
 BasicEnemyScene = ExtResource("2_y4bn1")
 PigEnemyScene = ExtResource("3_xik8m")
 ChickenEnemyScene = ExtResource("4_chicken")
-SpawnRate = 0.2
+BurstWaveTimer = NodePath("BurstWaveTimer")
+SpawnRate = 1.0
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
+autostart = true
+
+[node name="BurstWaveTimer" type="Timer" parent="."]
+wait_time = 20.0
+one_shot = false
 autostart = true
