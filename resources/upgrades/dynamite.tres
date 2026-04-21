@@ -1,12 +1,13 @@
-[gd_resource type="Resource" load_steps=3 format=3 uid="uid://cc7rl46jy1b5w"]
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://b6nq9z4k3trdm"]
 
-[ext_resource type="Script" path="res://Code/Upgrades/Ability.cs" id="1_rvxog"]
-[ext_resource type="PackedScene" uid="uid://c6a8b7c7d8faf" path="res://scenes/ability/dynamite_ability_controller/dynamite_ability_controller.tscn" id="2_w51r1"]
+[ext_resource type="PackedScene" uid="uid://c6a8b7c7d8faf" path="res://scenes/ability/dynamite_ability_controller/dynamite_ability_controller.tscn" id="1_ckd2b"]
+[ext_resource type="Script" path="res://Code/Upgrades/Ability.cs" id="2_ro6fb"]
 
 [resource]
-script = ExtResource("1_rvxog")
-AbilityControllerScene = ExtResource("2_w51r1")
+script = ExtResource("2_ro6fb")
+AbilityControllerScene = ExtResource("1_ckd2b")
 Id = "dynamite"
 MaxQuantity = 1
 Name = "Dynamite"
+Requires = ""
 Description = "Periodically throws dynamite behind you that explodes after 2 seconds!"

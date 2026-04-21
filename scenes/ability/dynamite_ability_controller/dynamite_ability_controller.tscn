@@ -1,10 +1,10 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://c6a8b7c7d8faf"]
 
-[ext_resource type="Script" path="res://Code/Controllers/DynamiteAbilityController.cs" id="1_a2b3c"]
-[ext_resource type="PackedScene" path="res://scenes/ability/dynamite_ability/dynamite_ability.tscn" id="2_d4e5f"]
+[ext_resource type="Script" path="res://Code/Controllers/DynamiteAbilityController.cs" id="1_3m5jg"]
+[ext_resource type="PackedScene" uid="uid://bj4kx9p2m5vwn" path="res://scenes/ability/dynamite_ability/dynamite_ability.tscn" id="2_d4e5f"]
 
 [node name="DynamiteAbilityController" type="Node"]
-script = ExtResource("1_a2b3c")
+script = ExtResource("1_3m5jg")
 DynamiteScene = ExtResource("2_d4e5f")
 Damage = 10.0
 

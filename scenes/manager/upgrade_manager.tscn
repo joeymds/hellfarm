@@ -1,13 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://2sjyd76iwdly"]
+[gd_scene format=3 uid="uid://2sjyd76iwdly"]
 
-[ext_resource type="Script" path="res://Code/Managers/UpgradeManager.cs" id="1_ibce2"]
+[ext_resource type="Script" uid="uid://b37lavm0dxxfq" path="res://Code/Managers/UpgradeManager.cs" id="1_ibce2"]
 [ext_resource type="Resource" uid="uid://7fxfv6ptpn5f" path="res://resources/upgrades/rake_damage.tres" id="2_rake"]
 [ext_resource type="Resource" uid="uid://brgtdhccluh8q" path="res://resources/upgrades/sword_rate.tres" id="3_sword"]
 [ext_resource type="Resource" uid="uid://dyek22jnwkh5o" path="res://resources/upgrades/sickle.tres" id="4_sickle"]
 [ext_resource type="Resource" uid="uid://cb4hce1jqq8nk" path="res://resources/upgrades/sickle_damage.tres" id="5_sickle_dmg"]
-[ext_resource type="Resource" uid="uid://cc7rl46jy1b5w" path="res://resources/upgrades/dynamite.tres" id="6_dynamite"]
-[ext_resource type="Resource" uid="uid://bvk8p3n7qm2x5" path="res://resources/upgrades/dynamite_damage.tres" id="7_dynamite_dmg"]
+[ext_resource type="Resource" uid="uid://b6nq9z4k3trdm" path="res://resources/upgrades/dynamite.tres" id="6_dynamite"]
+[ext_resource type="Resource" uid="uid://cwl0m4h7v2qkp" path="res://resources/upgrades/dynamite_damage.tres" id="7_dynamite_dmg"]
 
-[node name="UpgradeManager" type="Node"]
+[node name="UpgradeManager" type="Node" unique_id=1931905705]
 script = ExtResource("1_ibce2")
 UpgradePool = Array[Resource]([ExtResource("2_rake"), ExtResource("3_sword"), ExtResource("4_sickle"), ExtResource("5_sickle_dmg"), ExtResource("6_dynamite"), ExtResource("7_dynamite_dmg")])

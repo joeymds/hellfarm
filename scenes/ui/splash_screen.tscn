@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dq3yfxqh5lmkb"]
+[gd_scene format=3 uid="uid://dq3yfxqh5lmkb"]
 
-[ext_resource type="Script" path="res://Code/UI/SplashScreen.cs" id="1_splash"]
-[ext_resource type="Texture2D" uid="uid://ckbgpyqqbtvvk" path="res://assets/misc/splash-screen-01.png" id="2_splash"]
+[ext_resource type="Script" uid="uid://bmrjmgcklpxs6" path="res://Code/UI/SplashScreen.cs" id="1_splash"]
+[ext_resource type="Texture2D" uid="uid://0x8qxqpgo5pf" path="res://assets/misc/splash-screen-02.png" id="2_m0ilf"]
 
-[node name="SplashScreen" type="Control"]
+[node name="SplashScreen" type="Control" unique_id=300930812]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_splash")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1007888329]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,13 +21,13 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=171849050]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_splash")
+texture = ExtResource("2_m0ilf")
 expand_mode = 1
 stretch_mode = 5

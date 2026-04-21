@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=8 format=3 uid="uid://bj4kx9p2m5vwn"]
 
 [ext_resource type="Script" path="res://Code/Abilities/DynamiteAbility.cs" id="1_41xab"]
 [ext_resource type="Texture2D" uid="uid://b8bsw0nnqd6cf" path="res://scenes/game_objects/dynamite_stick/dynamite-01.png" id="2_3l90d"]
