@@ -5,8 +5,8 @@
 [ext_resource type="Resource" uid="uid://brgtdhccluh8q" path="res://resources/upgrades/sword_rate.tres" id="3_sword"]
 [ext_resource type="Resource" uid="uid://dyek22jnwkh5o" path="res://resources/upgrades/sickle.tres" id="4_sickle"]
 [ext_resource type="Resource" uid="uid://cb4hce1jqq8nk" path="res://resources/upgrades/sickle_damage.tres" id="5_sickle_dmg"]
-[ext_resource type="Resource" uid="uid://cg8s7n2qpyxh1" path="res://resources/upgrades/dynamite.tres" id="6_dynamite"]
-[ext_resource type="Resource" uid="uid://dsm4kl3n8vp2r" path="res://resources/upgrades/dynamite_damage.tres" id="7_dynamite_dmg"]
+[ext_resource type="Resource" uid="uid://cc7rl46jy1b5w" path="res://resources/upgrades/dynamite.tres" id="6_dynamite"]
+[ext_resource type="Resource" uid="uid://bvk8p3n7qm2x5" path="res://resources/upgrades/dynamite_damage.tres" id="7_dynamite_dmg"]
 
 [node name="UpgradeManager" type="Node"]
 script = ExtResource("1_ibce2")
