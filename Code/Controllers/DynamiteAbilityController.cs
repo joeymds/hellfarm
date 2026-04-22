@@ -78,7 +78,7 @@ public partial class DynamiteAbilityController : Node
         if (player == null)
             return;
 
-        var throwDirection = ResolveThrowDirection(player.Velocity);
+        var throwDirection = ResolveThrowDirection(player);
 
         var layer = GetTree().GetFirstNodeInGroup("foreground_layer") as Node;
         if (layer == null)
@@ -96,11 +96,12 @@ public partial class DynamiteAbilityController : Node
         dynamiteInstance.GlobalPosition = player.GlobalPosition;
     }
 
-    private Vector2 ResolveThrowDirection(Vector2 playerVelocity)
+    private Vector2 ResolveThrowDirection(Player player)
     {
+        var playerVelocity = player.Velocity;
         if (playerVelocity.Length() > VelocityThreshold)
         {
-            _lastKnownThrowDirection = -playerVelocity.Normalized();
+            _lastKnownThrowDirection = playerVelocity.Normalized();
         }
 
         if (_lastKnownThrowDirection == Vector2.Zero)
@@ -108,6 +109,7 @@ public partial class DynamiteAbilityController : Node
             _lastKnownThrowDirection = Vector2.Down;
         }
 
-        return _lastKnownThrowDirection;
+        // Throw in opposite direction of player movement (behind the player)
+        return -_lastKnownThrowDirection;
     }
 }

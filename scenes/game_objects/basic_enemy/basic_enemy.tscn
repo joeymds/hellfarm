@@ -192,6 +192,7 @@ script = ExtResource("1_io7df")
 MaxHealth = 8.0
 
 [node name="DeathComponent" parent="." unique_id=2094185332 node_paths=PackedStringArray("HealthComponent") instance=ExtResource("3_wxwfd")]
+ScoreValue = 3
 HealthComponent = NodePath("../HealthComponent")
 
 [node name="VialDropComponent" parent="." unique_id=523769506 node_paths=PackedStringArray("HealthComp") instance=ExtResource("3_jl53g")]

@@ -188,6 +188,7 @@ MaxSpeed = 50
 Acceleration = 8.0
 
 [node name="DeathComponent" parent="." unique_id=626497071 node_paths=PackedStringArray("HealthComponent") instance=ExtResource("3_skhrf")]
+ScoreValue = 4
 HealthComponent = NodePath("../HealthComponent")
 
 [node name="VialDropComponent" parent="." unique_id=1342852621 node_paths=PackedStringArray("HealthComp") instance=ExtResource("7_dcscu")]

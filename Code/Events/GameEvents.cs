@@ -28,6 +28,9 @@ public partial class GameEvents : Node
 
     [Signal]
     public delegate void AbilityUpgradeAddedEventHandler(AbilityUpgrade upgrade);
+
+    [Signal]
+    public delegate void EnemyKilledEventHandler(int scoreValue);
     
     public void EmitExperienceVialCollected(int number)
     {
@@ -37,5 +40,10 @@ public partial class GameEvents : Node
     public void EmitAbilityUpgradeAdded(AbilityUpgrade upgrade)
     {
         EmitSignal("AbilityUpgradeAdded", upgrade);
+    }
+
+    public void EmitEnemyKilled(int scoreValue)
+    {
+        EmitSignal("EnemyKilled", scoreValue);
     }
 }
